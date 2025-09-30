@@ -4,11 +4,11 @@ package fleet;
  *
  * @author Carly Chick
  */
-public class RunProject1 {
+public class RunProject2 {
     /**
      * Constructs a new RunProject1 object.
      */
-    public RunProject1() {
+    public RunProject2() {
 
     }
 

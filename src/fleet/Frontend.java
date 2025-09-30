@@ -33,6 +33,7 @@ public class Frontend {
      * @param cmd the command token
      * @param parts the tokenized input line from the console
      */
+    //TODO: MUST MODIFY
     private void processCommand(String cmd, String[] parts) {
         switch(cmd){
             case "A":
@@ -293,6 +294,7 @@ public class Frontend {
      *
      * @param parts tokenized input (must be length 5)
      */
+    //TODO: MUST MODIFY
     private void addToFleet(String[] parts){
         if(parts.length != 5){
             System.out.println("Not a valid A command.");
@@ -328,6 +330,7 @@ public class Frontend {
      *
      * @param parts tokenized input (must be length 2)
      */
+    //TODO: MUST MODIFY?
     private void removeFromFleet(String[] parts){
         if(parts.length != 2){
             System.out.println("Not a valid D command.");
@@ -353,6 +356,7 @@ public class Frontend {
      *
      * @param parts tokenized input (must be length 5)
      */
+    //TODO: MUST MODIFY
     private void bookVehicle(String[] parts){
         if(parts.length != 5){
             System.out.println("Not a valid B command.");
@@ -415,6 +419,7 @@ public class Frontend {
      *
      * @param parts tokenized input (must be length 4)
      */
+    //TODO: MUST MODIFY
     private void returnVehicle(String[] parts){
         if(parts.length != 4){
             System.out.println("Not a valid R command.");
@@ -451,6 +456,7 @@ public class Frontend {
     /**
      * Prints all vehicles in the fleet ordered by make and obtained date.
      */
+    //TODO: MUST MODIFY
     private void displayVehicles(){
         if(fleet.getSize() == 0){
             System.out.println("There is no vehicle in the fleet.");
@@ -464,6 +470,7 @@ public class Frontend {
     /**
      * Prints reservations ordered by license plate and beginning date.
      */
+    //TODO: MUST MODIFY
     private void displayBookings1(){
         if(reservation.getSize() == 0){
             System.out.println("There is no booking record.");
@@ -500,6 +507,8 @@ public class Frontend {
         tripList.print();
         System.out.println("*end of list.");
     }
+
+    //TODO: MUST ADD "PC" API METHOD CALL
 
     /**
      * Runs the command loop for the Vehicle Management System.
