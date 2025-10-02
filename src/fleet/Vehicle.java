@@ -5,11 +5,13 @@ package fleet;
  *
  * @author Carly Chick
  */
-public class Vehicle implements Comparable<Vehicle> {
+public abstract class Vehicle implements Comparable<Vehicle> {
     private String plate;
     private Date obtained;
     private Make make;
     private int mileage;
+
+    protected Campus campus;
 
     /**
      * Creates a Vehicle with the given license plate.
@@ -89,6 +91,12 @@ public class Vehicle implements Comparable<Vehicle> {
         }
         return 0;
     }
+
+    //TODO
+    public abstract double charge(int mileageUsed);
+
+    //TODO
+    public abstract double surcharge(int mileageUsed, boolean surcharge);
 
     /**
      * Method to get the license plate.

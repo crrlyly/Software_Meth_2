@@ -9,6 +9,7 @@ public class Trip {
     private Booking booking;
     private int beginMileage;
     private int endMileage;
+    private boolean surcharge;
 
     /**
      * Creates a Trip with the booking, beginning mileage, and ending mileage.
@@ -56,6 +57,7 @@ public class Trip {
      *
      * @return String that shows all the Trip information
      */
+    //TODO
     @Override
     public String toString(){
         String plate = booking.getVehicle().getPlate();
@@ -64,7 +66,9 @@ public class Trip {
         String originalMileage = Integer.toString(beginMileage);
         String currentMileage = Integer.toString(endMileage);
         String mileageUsed = Integer.toString(endMileage - beginMileage);
-        return plate + " " + beginDate + " ~ " + endDate + " original mileage: " + originalMileage
-                + " current mileage: " + currentMileage + " mileage used: " + mileageUsed;
+        String surchargeAsterick = surcharge ? "**" : "";
+        return plate + " " + beginDate + " ~ " + endDate + " mileage(old): " + originalMileage
+                + " mileage(new): " + currentMileage + " mileage(used): " + mileageUsed + " [dropped off: " + booking.getdropoff() +
+                + surchargeAsterick + "]";
     }
 }
