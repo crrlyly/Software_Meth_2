@@ -64,6 +64,14 @@ public class Booking {
         this.dropoff = dropoff;
     }
 
+    /**
+     * Constructor of a booking with a beginning date, end date, vehicle, employee, and dropoff.
+     *
+     * @param begin
+     * @param end
+     * @param employee
+     * @param vehicle
+     */
     public Booking(Date begin, Date end, Employee employee, Vehicle vehicle, ) {
         this.begin = begin;
         this.end = end;
@@ -128,8 +136,8 @@ public class Booking {
      */
     @Override
     public String toString() {
-        return this.vehicle.toString() + " [beginning " + this.begin.toString() + " ending "
-                + this.end.toString() +":" + this.employee + "]";
+        return this.vehicle.toString() + this.begin.toString() + " ~ "
+                + this.end.toString() + " ["+ this.dropoff+"] "+this.employee + "]";
     }
 
     /**
