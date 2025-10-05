@@ -1,5 +1,7 @@
 package fleet;
 
+import Util.Date;
+
 public class Truck extends Vehicle{
     private static final double TRUCK_RATE = 0.50;
 

@@ -1,4 +1,7 @@
 package fleet;
+
+import Util.Date;
+
 /**
  * The class represents a vehicle with a license plate, obtained date, make, and mileage,
  * Also has methods for comparison, equality checks, and string representation.

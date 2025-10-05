@@ -1,5 +1,7 @@
 package fleet;
 
+import Util.Date;
+
 public class Utility extends Vehicle{
 
     private static final double UTILITY_RATE = 0.40;
