@@ -1,4 +1,7 @@
 package fleet;
+
+import Util.Date;
+
 /**
  * This class implements bookings for the fleet including an equals and toString method.
  *
@@ -9,6 +12,7 @@ public class Booking {
     private Date end;
     private Employee employee;
     private Vehicle vehicle;
+    private Campus dropoff;
 
     /**
      * Constructor of a booking with just a vehicle.
@@ -52,7 +56,23 @@ public class Booking {
      * @param employee the employee booking the vehicle
      * @param vehicle the vehicle being booked
      */
-    public Booking(Date begin, Date end, Employee employee, Vehicle vehicle) {
+    public Booking(Date begin, Date end, Employee employee, Vehicle vehicle, Campus dropoff) {
+        this.begin = begin;
+        this.end = end;
+        this.employee = employee;
+        this.vehicle = vehicle;
+        this.dropoff = dropoff;
+    }
+
+    /**
+     * Constructor of a booking with a beginning date, end date, vehicle, employee, and dropoff.
+     *
+     * @param begin
+     * @param end
+     * @param employee
+     * @param vehicle
+     */
+    public Booking(Date begin, Date end, Employee employee, Vehicle vehicle, ) {
         this.begin = begin;
         this.end = end;
         this.employee = employee;
@@ -116,8 +136,8 @@ public class Booking {
      */
     @Override
     public String toString() {
-        return this.vehicle.toString() + " [beginning " + this.begin.toString() + " ending "
-                + this.end.toString() +":" + this.employee + "]";
+        return this.vehicle.toString() + this.begin.toString() + " ~ "
+                + this.end.toString() + " ["+ this.dropoff+"] "+this.employee + "]";
     }
 
     /**

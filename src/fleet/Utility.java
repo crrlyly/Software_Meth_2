@@ -1,5 +1,7 @@
 package fleet;
 
+import Util.Date;
+
 public class Utility extends Vehicle{
     public Utility(String plate) {
         super(plate);
