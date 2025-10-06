@@ -72,7 +72,7 @@ public class Booking {
      * @param employee
      * @param vehicle
      */
-    public Booking(Date begin, Date end, Employee employee, Vehicle vehicle, ) {
+    public Booking(Date begin, Date end, Employee employee, Vehicle vehicle) {
         this.begin = begin;
         this.end = end;
         this.employee = employee;

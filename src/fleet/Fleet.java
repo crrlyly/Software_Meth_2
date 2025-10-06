@@ -1,5 +1,6 @@
 package fleet;
 import java.util.Scanner;
+import Util.Date;
 /**
  * This class creates a dynamic array of Vehicle objects that allows to add, remove,
  * find, and a print sorted by make (then obtained date).
