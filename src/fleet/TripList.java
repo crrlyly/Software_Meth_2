@@ -1,11 +1,12 @@
 package fleet;
+import Util.List;
 /**
  * This class creates a circularly linked list of trips.
  * Additionally, it inserts the trips in order of earliest end date, and can print the list/find the number of trips in the list.
  *
  * @author Alec Cotler
  */
-public class TripList {
+public class TripList extends List<Trip>{
     private Node last; //the reference to the last node of the linked list.
 
     /**

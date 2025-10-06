@@ -1,4 +1,5 @@
 package fleet;
+import Util.List;
 /**
  * This class creates an array of bookings, where if the array is full adds 4 more spaces to the array
  * Then, additional lines of description are added to elaborate on the
@@ -6,7 +7,7 @@ package fleet;
  *
  * @author Alec Cotler
  */
-public class Reservation {
+public class Reservation extends List<Booking>{
 
     public static final int initialArrayLength = 4;
     public static int NOT_FOUND = -1;
