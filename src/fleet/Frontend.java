@@ -320,7 +320,13 @@ public class Frontend {
 
     //__________________________________________________________________________________________________________
 
-    //TODO ADD COMMENTS
+    /**
+     * Checks for valid date for adding to fleet.
+     *
+     * @param parts commandline tokens
+     * @param today today's date
+     * @return true if all checks pass; otherwise false with an error message
+     */
     private boolean addCheckDate(String[] parts, Date today){
         Date isValidDate = new Date(parts[2]);
         if(!isValidDate.isValid()){
@@ -333,7 +339,14 @@ public class Frontend {
         }
         return true;
     }
-    //TODO ADD COMMENTS
+
+    /**
+     * Checks for valid make for adding to fleet.
+     *
+     * @param parts commandline tokens
+     * @param make vehicle's make
+     * @return true if all checks pass; otherwise false with an error message
+     */
     private boolean addCheckMake(String[] parts, Make make){
         if(make == null){
             System.out.println(parts[3] + " - invalid make.");
@@ -341,7 +354,13 @@ public class Frontend {
         }
         return true;
     }
-    //TODO ADD COMMENTS
+
+    /**
+     * Checks for valid mileage for adding to fleet.
+     *
+     * @param parts commandline tokens
+     * @return true if all checks pass; otherwise false with an error message
+     */
     private boolean addCheckMileage(String[] parts){
         int odo;
         try {
@@ -358,8 +377,14 @@ public class Frontend {
         return true;
 
     }
-    //TODO ADD COMMENTS
-    private boolean addCheckTokens(String[] parts, Campus campus){
+
+    /**
+     * Checks for valid tokens for adding to fleet.
+     *
+     * @param parts commandline tokens
+     * @return true if all checks pass; otherwise false with an error message
+     */
+    private boolean addCheckTokens(String[] parts){
         if(parts[1].length() != 6){
             System.out.println(parts[1] + " - license plate number must be exactly 6 characters.");
             return false;
@@ -378,6 +403,17 @@ public class Frontend {
                 return false;
             }
         }
+        return true;
+    }
+
+    /**
+     * Checks for valid campus for adding to fleet.
+     *
+     * @param parts commandline tokens
+     * @param campus campus
+     * @return true if all checks pass; otherwise false with an error message
+     */
+    private boolean addCheckCampus(String[] parts, Campus campus){
         if(campus == null){
             System.out.println(parts[5] + " - invalid location.");
             return false;
@@ -398,7 +434,7 @@ public class Frontend {
         Make make = Make.parseMake(parts[3]);
         Campus campus = Campus.parseCampus(parts[5]);
         if(!addCheckDate(parts, today) || !addCheckMake(parts, make) || !addCheckMileage(parts)
-                || !addCheckTokens(parts, campus)){
+                || !addCheckTokens(parts) || !addCheckCampus(parts, campus)){
             return;
         }
         Date isValidDate = new Date(parts[2]);
