@@ -81,7 +81,7 @@ public class Fleet extends List<Vehicle>{
         int index = find(vehicle);
         if(index != -1){
             this.fleet[index] = this.fleet[size-1];
-            this.fleet[size-1] = null;
+            this.fleet[size - 1] = null;
             this.size -= 1;
         }
     }

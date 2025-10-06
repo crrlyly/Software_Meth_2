@@ -18,8 +18,8 @@ public class List<E> implements Iterable<E> {
         if (e == null){
             return NOT_FOUND;
         }
-        for (int i=0; i<size; i++){
-            if (objects[i].equals(e)){
+        for (int i = 0; i < size; i++){
+            if (e.equals(objects[i])){
                 return i;
             }
         }
@@ -28,7 +28,7 @@ public class List<E> implements Iterable<E> {
 
     private void grow() {
         E[] newObjects = (E[]) new Object[this.objects.length + CAPACITY];
-        for (int i = 0; i < this.objects.length; i++) {
+        for(int i = 0; i < size; i++) {
             newObjects[i] = this.objects[i]; // copy over each element
         }
         this.objects = newObjects; // replace old array
@@ -56,29 +56,25 @@ public class List<E> implements Iterable<E> {
         if (this.size == this.objects.length) {
             this.grow();
         }
-        this.objects[this.size] = e;
-        size++;
+        this.objects[size++] = e;
     }
 
     public void remove(E e) {
-        int bookingIndex = NOT_FOUND;
+        int index = NOT_FOUND;
         if (contains(e)) {
-            bookingIndex = find(e);
+            index = find(e);
         } else return;
 
-        this.objects[bookingIndex] = objects[size - 1];
+        this.objects[index] = objects[size - 1];
         this.objects[size - 1] = null;
         size--;
     }
 
     public boolean isEmpty() {
-        if(size==0){
-            return true;
-        }
-        return false;
+        return size == 0;
     }
 
-    public int size() {
+    public int getSize() {
         return size;
     }
 
