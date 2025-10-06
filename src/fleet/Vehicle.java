@@ -30,11 +30,12 @@ public abstract class Vehicle implements Comparable<Vehicle> {
      * @param make the manufacturer or brand of the vehicle
      * @param mileage the mileage (in miles) recorded for the vehicle
      */
-    public Vehicle(String plate, Date obtained, Make make, int mileage) {
+    public Vehicle(String plate, Date obtained, Make make, int mileage, Campus campus) {
         this.plate = plate;
         this.obtained = obtained;
         this.make = make;
         this.mileage = mileage;
+        this.campus = campus;
     }
 
     /**
@@ -62,7 +63,8 @@ public abstract class Vehicle implements Comparable<Vehicle> {
      */
     @Override
     public String toString() {
-        return this.plate + ":" + this.make + ":" + this.obtained + " [mileage:" + this.mileage + "]";
+        return this.plate + ":" + this.make + ":" + this.obtained + " [mileage:" + this.mileage + "] [" + this.campus +
+                ":" + this.campus.getCity() + "]";
     }
 
     /**
@@ -76,10 +78,15 @@ public abstract class Vehicle implements Comparable<Vehicle> {
      * or if the Makes are equal but this Vehicle's obtained date is later;
      * Null pointer exception if the given Vehicle is null
      */
+    //TODO update the comment
     @Override
     public int compareTo(Vehicle other) {
         if (other == null) {
             throw new NullPointerException("Cannot compare to null Vehicle");
+        }
+        int byLocation = Campus.compareStringsIgnoreCase(this.campus.getCity(), other.campus.getCity());
+        if (byLocation != 0) {
+            return byLocation < 0 ? -1 : 1;
         }
         int byMake = Make.compareStringsIgnoreCase(this.getMake().name(), other.getMake().name());
         if (byMake != 0) {
@@ -143,72 +150,5 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         this.mileage = mileage;
     }
 
-    /**
-     * Test Case 1: Testing method that compares the Make and Obtained Date of two equal vehicles.
-     */
-    private static void testVehiclesEqual() {
-        Vehicle one = new Vehicle("192837D", new Date("1/15/2008"), Make.CHEVY, 38);
-        Vehicle two = new Vehicle("192837D", new Date("1/15/2008"), Make.CHEVY, 38);
 
-        int expectedOutput = 0;
-        int actualOutput = one.compareTo(two);
-        System.out.println("**Test case 1: Testing two same vehicles");
-        testResult(one, two, expectedOutput, actualOutput);
-    }
-
-    /**
-     * Test Case 2: Testing method that compares the Make and Obtained Date of two vehicles where the makes
-     * are the same but the first vehicle has an earlier Obtained Date.
-     */
-    private static void testVehiclesSameMakeEarlierThis() {
-        Vehicle one = new Vehicle("192437D", new Date("1/15/2008"), Make.CHEVY, 38);
-        Vehicle two = new Vehicle("194837D", new Date("1/16/2008"), Make.CHEVY, 38);
-
-        int expectedOutput = -1;
-        int actualOutput = one.compareTo(two);
-        System.out.println("**Test case 2: Testing two vehicles with the same make but this vehicle has an earlier date " +
-                "than the vehicle that was passed in.");
-        testResult(one, two, expectedOutput, actualOutput);
-    }
-
-    /**
-     * Test Case 3: Testing method that compares the Make and Obtained Date of two vehicles where the
-     * Make of the first vehicle comes before the second vehicle's make alphabetically.
-     */
-    private static void testVehiclesDiffMakesBiggerThis() {
-        Vehicle one = new Vehicle("192437D", new Date("1/15/2008"), Make.FORD, 38);
-        Vehicle two = new Vehicle("194837D", new Date("1/16/2008"), Make.CHEVY, 38);
-
-        int expectedOutput = 1;
-        int actualOutput = one.compareTo(two);
-        System.out.println("**Test case 3: Testing two vehicles where this vehicle has a " +
-                "make that comes after the second vehicle's make alphabetically.");
-        testResult(one, two, expectedOutput, actualOutput);
-    }
-
-    /**
-     * Method that tests the testing methods.
-     *
-     * @param one the first Vehicle object
-     * @param two the second Vehicle object
-     * @param expectedOutput the correct output
-     * @param actualOutput the output that the testing method gave
-     */
-    private static void testResult(Vehicle one, Vehicle two, int expectedOutput, int actualOutput) {
-        System.out.println("Test input: " + one + " and " + two);
-        System.out.println("Expected output: " + expectedOutput);
-        System.out.println("Actual output: " + actualOutput);
-        System.out.println(expectedOutput != actualOutput ? " (FAIL)\n" : " (PASS)\n");
-    }
-
-    /**
-     * Testbed main to test the compareTo method.
-     *
-     * @param args command line arguments
-     */
-    public static void main(String[] args) {
-        testVehiclesEqual();
-        testVehiclesSameMakeEarlierThis();
-        testVehiclesDiffMakesBiggerThis();
-    }
 }

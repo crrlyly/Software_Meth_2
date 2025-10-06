@@ -100,7 +100,7 @@ public class Fleet {
     }
 
     /**
-     * Prints all vehicles in the fleet in order by make and obtained date.
+     * Prints all vehicles in the fleet in order by location, make, then obtained date.
      * Sorting is done using selection sort.
      */
     public void printByMake() {
@@ -138,6 +138,10 @@ public class Fleet {
         return fleet[index];
     }
 
+    public Vehicle[] getFleet() {
+        return fleet;
+    }
+
     /**
      * Method to return the size of the fleet (the amount of actual vehicles in the fleet)
      *
@@ -149,7 +153,35 @@ public class Fleet {
 
     //TODO
     public int load(Scanner scanner){
-
+        int count = 0;
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine().trim();
+            if (!line.isEmpty()) {
+                String[] parts = line.split("\\s+");
+                Date date = new Date(parts[1]);
+                Make make = Make.parseMake(parts[2]);
+                int odo = Integer.parseInt(parts[3]);
+                Campus campus = Campus.parseCampus(parts[4]);
+                Vehicle vehicle;
+                switch(parts[0].charAt(parts[0].length() - 1)){
+                    case 'D':
+                        vehicle = new Utility(parts[0],date,make,odo,campus);
+                        break;
+                    case 'X':
+                        vehicle = new Truck(parts[0],date,make,odo,campus);
+                        break;
+                    case 'S':
+                        vehicle = new Sedan(parts[0],date,make,odo,campus);
+                        break;
+                    default:
+                        continue;
+                }
+                if(!contains(vehicle)){
+                    count++;
+                    add(vehicle);
+                }
+            }
+        }
+        return count;
     }
-
 }

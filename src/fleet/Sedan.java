@@ -7,17 +7,20 @@ public class Sedan extends Vehicle{
         super(plate);
     }
 
-    public Sedan(String plate, Date obtained, Make make, int mileage) {
-        super(plate, obtained, make, mileage);
+    public Sedan(String plate, Date obtained, Make make, int mileage, Campus campus) {
+        super(plate, obtained, make, mileage, campus);
     }
 
     @Override
     public double charge(int mileageUsed){
-        return 1.0;
+        return (mileageUsed * 1.79);
     }
 
     @Override
     public double surcharge(int mileageUsed, boolean surcharge){
-        return 1.0;
+        if(surcharge){
+            return (mileageUsed * 1.79) + (.3*mileageUsed < 35.99 ? (.3*mileageUsed) : 35.99);
+        }
+        return -1;
     }
 }

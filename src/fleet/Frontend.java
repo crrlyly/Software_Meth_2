@@ -1,6 +1,8 @@
 package fleet;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Calendar;
+import java.io.File;
 /**
  * Console based frontend for the Vehicle Management System.
  *
@@ -33,9 +35,11 @@ public class Frontend {
      * @param cmd the command token
      * @param parts the tokenized input line from the console
      */
-    //TODO: MUST MODIFY
-    private void processCommand(String cmd, String[] parts) {
+    private void processCommand(String cmd, String[] parts){
         switch(cmd){
+            case "L":
+                loadVehicles();
+                break;
             case "A":
                 addToFleet(parts);
                 break;
@@ -251,6 +255,197 @@ public class Frontend {
     }
 
     /**
+     * Method to easily create a vehicle based off which type of Vehicle it is.
+     *
+     * @param plate license plate
+     * @param date obtained date
+     * @param make vehicle make
+     * @param odo mileage
+     * @param campus campus
+     * @return the correct vehicle object for its type; otherwise null vehicle object
+     */
+    private Vehicle createVehicle(String plate, Date date, Make make, Integer odo, Campus campus){
+        switch(plate.charAt(plate.length() - 1)){
+            case 'D':
+                return new Utility(plate,date,make,odo,campus);
+            case 'X':
+                return new Truck(plate,date,make,odo,campus);
+            case 'S':
+                return new Sedan(plate,date,make,odo,campus);
+            default:
+                System.out.println("Unknown vehicle type: " + plate);
+                return null;
+        }
+    }
+
+    /**
+     * Method to check if data tokens are correct for command.
+     *
+     * @param parts tokens from commandline
+     * @param len correct length of the tokens
+     * @param command command in token
+     * @return true if parts length is equal to len; otherwise false
+     */
+    private boolean checkCommandParse(String[] parts, int len, String command){
+        String commandString = "";
+        if(command.equals("A")){
+            commandString = "adding";
+        }
+        else if (command.equals("R")){
+            commandString = "removing";
+        }
+        if(parts.length != len){
+            System.out.println("Missing data tokens for " + commandString + " a vehicle.");
+            return false;
+        }
+        return true;
+    }
+
+    //__________________________________________________________________________________________________________
+
+    /**
+     * Method that loads the vehicles from vehicle.txt
+     */
+    private void loadVehicles(){
+        try {
+            Scanner scanner = new Scanner(new File("vehicles.txt"));
+            int count = fleet.load(scanner);
+            System.out.println(count + " vehicles loaded.");
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: vehicles.txt");
+        }
+    }
+
+    //__________________________________________________________________________________________________________
+
+    //TODO ADD COMMENTS
+    private boolean addCheckDate(String[] parts, Date today){
+        Date isValidDate = new Date(parts[2]);
+        if(!isValidDate.isValid()){
+            System.out.println(parts[2] + " - invalid calendar date.");
+            return false;
+        }
+        else if(isValidDate.compareTo(today) >= 0){
+            System.out.println(parts[2] + " - is today or a future date.");
+            return false;
+        }
+        return true;
+    }
+    //TODO ADD COMMENTS
+    private boolean addCheckMake(String[] parts, Make make){
+        if(make == null){
+            System.out.println(parts[3] + " - invalid make.");
+            return false;
+        }
+        return true;
+    }
+    //TODO ADD COMMENTS
+    private boolean addCheckMileage(String[] parts){
+        int odo;
+        try {
+            odo = Integer.parseInt(parts[4]);
+        } catch (NumberFormatException e) {
+            System.out.println("For input string: \"" + parts[4] + "\" - not a valid mileage.");
+            return false;
+        }
+        if (!isValidOdometer(odo)) {
+            System.out.println(parts[4] + " - invalid mileage.");
+            return false;
+        }
+
+        return true;
+
+    }
+    //TODO ADD COMMENTS
+    private boolean addCheckTokens(String[] parts, Campus campus){
+        if(parts[1].length() != 6){
+            System.out.println(parts[1] + " - license plate number must be exactly 6 characters.");
+            return false;
+        }
+        for (int i = 0; i < parts[1].length(); i++) {
+            if (i < 5) {
+                if (!Character.isDigit(parts[1].charAt(i))) {
+                    System.out.println(parts[1] + " - first 5 characters must be numbers.");
+                    return false;
+                }
+                continue;
+            }
+            char vehicleCheck = parts[1].charAt(5);
+            if (!(vehicleCheck == 'D' || vehicleCheck == 'S' || vehicleCheck == 'X')) {
+                System.out.println(parts[1] + " - last character is not a valid vehicle type.");
+                return false;
+            }
+        }
+        if(campus == null){
+            System.out.println(parts[5] + " - invalid location.");
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Adds a vehicle to the fleet.
+     *
+     * @param parts tokenized input (must be length 5)
+     */
+    private void addToFleet(String[] parts){
+        if(!checkCommandParse(parts, 6, "A")){
+            return;
+        }
+        Date today = getToday();
+        Make make = Make.parseMake(parts[3]);
+        Campus campus = Campus.parseCampus(parts[5]);
+        if(!addCheckDate(parts, today) || !addCheckMake(parts, make) || !addCheckMileage(parts)
+                || !addCheckTokens(parts, campus)){
+            return;
+        }
+        Date isValidDate = new Date(parts[2]);
+        int odo = Integer.parseInt(parts[4]);
+        Vehicle vehicle = createVehicle(parts[0], isValidDate, make, odo, campus);
+        fleet.add(vehicle);
+        System.out.println(vehicle.toString() + " has been added to the fleet.");
+    }
+
+    //__________________________________________________________________________________________________________
+
+    //TODO ADD COMMENTS
+    private boolean removeChecks(Vehicle vehicle, Booking booking){
+        if(!fleet.contains(vehicle)){
+            System.out.println(vehicle.getPlate() + " is not in the fleet.");
+            return false;
+        }
+        if(reservation.findInstanceOfVehicleOnlyPlate(booking)){
+            System.out.println(vehicle.getPlate() + " - has existing bookings; cannot be removed.");
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Removes a vehicle from the fleet.
+     *
+     * @param parts tokenized input (must be length 2)
+     */
+    //TODO: MUST MODIFY?
+    private void removeFromFleet(String[] parts){
+        if(!checkCommandParse(parts,2,"D")){
+            return;
+        }
+        Vehicle vehicle = createVehicle(parts[1], null, null, null, null);
+        Booking booking = new Booking(vehicle);
+        if(!removeChecks(vehicle, booking)){
+            return;
+        }
+        Vehicle getOriginalVehicle = fleet.getVehicle(vehicle);
+        System.out.println(getOriginalVehicle.toString() + " has been removed from the fleet.");
+        fleet.remove(vehicle);
+    }
+
+    //__________________________________________________________________________________________________________
+
+
+    /**
      * Checks requested booking dates against rules:
      * Prints a specific error message and returns false on the first violation.
      *
@@ -261,7 +456,8 @@ public class Frontend {
      * @param threeMonthsFromToday the date three months from today
      * @return true if all checks pass; false otherwise (and will print error message)
      */
-    private boolean bookVehicleDateChecks(String[] parts, Date startingDate, Date endingDate, Date today, Date threeMonthsFromToday){
+    private boolean bookVehicleDateChecks(String[] parts, Date startingDate, Date endingDate, Date today,
+                                          Date threeMonthsFromToday){
         if(!startingDate.isValid()){
             System.out.println(parts[1] + " - beginning date is not a valid calendar date.");
             return false;
@@ -289,66 +485,32 @@ public class Frontend {
         return true;
     }
 
-    /**
-     * Adds a vehicle to the fleet.
-     *
-     * @param parts tokenized input (must be length 5)
-     */
-    //TODO: MUST MODIFY
-    private void addToFleet(String[] parts){
-        if(parts.length != 5){
-            System.out.println("Not a valid A command.");
-            return;
+    private boolean bookingChecks(String[] parts, Vehicle vehicle, Date startingDate, Date endingDate,
+                                  Date today,  Date threeMonthsFromToday, Employee employee, Campus campus){
+        if (!bookVehicleDateChecks(parts, startingDate, endingDate, today, threeMonthsFromToday)){
+            return false;
         }
-        Date isValidDate = new Date(parts[2]);
-        Date today = getToday();
-        if(!isValidDate.isValid()){
-            System.out.println(parts[2] + " - invalid calendar date.");
-            return;
-        }
-        else if(isValidDate.compareTo(today) >= 0){
-            System.out.println(parts[2] + " - is today or a future date.");
-            return;
-        }
-        Make make = Make.parseMake(parts[3]);
-        if(make == null){
-            System.out.println(parts[3] + " - invalid make.");
-            return;
-        }
-        int odo = Integer.parseInt(parts[4]);
-        if (!isValidOdometer(odo)) {
-            System.out.println(parts[4] + " - invalid mileage.");
-            return;
-        }
-        Vehicle vehicle = new Vehicle(parts[1], isValidDate, make, odo);
-        fleet.add(vehicle);
-        System.out.println(vehicle.toString() + " has been added to the fleet.");
-    }
-
-    /**
-     * Removes a vehicle from the fleet.
-     *
-     * @param parts tokenized input (must be length 2)
-     */
-    //TODO: MUST MODIFY?
-    private void removeFromFleet(String[] parts){
-        if(parts.length != 2){
-            System.out.println("Not a valid D command.");
-            return;
-        }
-        Vehicle vehicle = new Vehicle(parts[1]);
         if(!fleet.contains(vehicle)){
             System.out.println(vehicle.getPlate() + " is not in the fleet.");
-            return;
+            return false;
         }
-        Booking booking = new Booking(vehicle);
-        if(reservation.findInstanceOfVehicleOnlyPlate(booking)){
-            System.out.println(vehicle.getPlate() + " - has existing bookings; cannot be removed.");
-            return;
+        if (!isVehicleAvailable(vehicle, startingDate, endingDate)) {
+            System.out.println(vehicle.getPlate() + " - booking with " + parts[1] + " ~ " + parts[2] + " not available.");
+            return false;
         }
-        Vehicle getOriginalVehicle = fleet.getVehicle(vehicle);
-        System.out.println(getOriginalVehicle.toString() + " has been removed from the fleet.");
-        fleet.remove(vehicle);
+        if(employee == null){
+            System.out.println(parts[4] + " - not an eligible employee to book.");
+            return false;
+        }
+        if (!isVehicleAvailableSelf(startingDate, endingDate, parts[4])) {
+            System.out.println(parts[4].toUpperCase() + " - has an existing booking conflicting with the beginning date " + parts[1]);
+            return false;
+        }
+        if(campus == null){
+            System.out.println(parts[5] + " - invalid location.");
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -356,42 +518,30 @@ public class Frontend {
      *
      * @param parts tokenized input (must be length 5)
      */
-    //TODO: MUST MODIFY
+    //TODO: In Progress
     private void bookVehicle(String[] parts){
-        if(parts.length != 5){
-            System.out.println("Not a valid B command.");
+        if(!checkCommandParse(parts, 6,"B")){
             return;
         }
         Date startingDate = new Date(parts[1]);
         Date endingDate = new Date(parts[2]);
         Date today = getToday();
         Date threeMonthsFromToday = getThreeMonthsFromToday();
-        if (!bookVehicleDateChecks(parts, startingDate, endingDate, today, threeMonthsFromToday)){
-            return;
-        }
-        Vehicle vehicle = new Vehicle(parts[3]);
-        if(!fleet.contains(vehicle)){
-            System.out.println(vehicle.getPlate() + " is not in the fleet.");
-            return;
-        }
-        if (!isVehicleAvailable(vehicle, startingDate, endingDate)) {
-            System.out.println(vehicle.getPlate() + " - booking with " + parts[1] + " ~ " + parts[2] + " not available.");
-            return;
-        }
         Employee employee = Employee.parseEmployee(parts[4]);
-        if(employee == null){
-            System.out.println(parts[4] + " - not an eligible employee to book.");
+        Campus campus = Campus.parseCampus(parts[5]);
+        Vehicle vehicle = createVehicle(parts[3], null, null, null, null);
+        if(!bookingChecks(parts, vehicle, startingDate, endingDate, today,
+                        threeMonthsFromToday, employee, campus)){
             return;
         }
-        if (!isVehicleAvailableSelf(startingDate, endingDate, parts[4])) {
-            System.out.println(parts[4].toUpperCase() + " - has an existing booking conflicting with the beginning date " + parts[1]);
-            return;
-        }
-        Booking booking = new Booking(startingDate, endingDate, employee, fleet.getVehicle(vehicle));
-        System.out.println(booking.getVehicle().toString() + " [beginning " + booking.getBegin() + " ending "
-                + booking.getEnd() + ":" + booking.getEmployee() + "] booked.");
-        reservation.add(booking);
+//        Booking booking = new Booking(startingDate, endingDate, employee, fleet.getVehicle(vehicle), campus);
+//        System.out.println(booking.getVehicle().toString() + " [beginning " + booking.getBegin() + " ending "
+//                + booking.getEnd() + ":" + booking.getEmployee() + "] booked.");
+//        reservation.add(booking);
     }
+
+    //__________________________________________________________________________________________________________
+
 
     /**
      * Cancels an existing reservation.
@@ -399,11 +549,11 @@ public class Frontend {
      * @param parts tokenized input (must be length 4)
      */
     private void cancelBooking(String[] parts){
-        if(parts.length != 4){
-            System.out.println("Not a valid B command.");
+        if(!checkCommandParse(parts, 4,"C")){
             return;
         }
-        Booking booking = new Booking(new Date(parts[1]),new Date(parts[2]),new Vehicle(parts[3]));
+        Booking booking = new Booking(new Date(parts[1]),new Date(parts[2]),createVehicle(parts[3], null,
+                null,null,null));
         if(!reservation.contains(booking)){
             System.out.println(parts[3] + ":" + parts[1] + " ~ " + parts[2] + " - cannot find the booking.");
             return;
@@ -414,6 +564,9 @@ public class Frontend {
         reservation.remove(booking);
     }
 
+    //__________________________________________________________________________________________________________
+
+
     /**
      * Returns a vehicle and archives the trip.
      *
@@ -421,11 +574,10 @@ public class Frontend {
      */
     //TODO: MUST MODIFY
     private void returnVehicle(String[] parts){
-        if(parts.length != 4){
-            System.out.println("Not a valid R command.");
+        if(!checkCommandParse(parts, 4,"R")){
             return;
         }
-        Booking booking = new Booking(new Date(parts[1]), new Vehicle(parts[2]));
+        Booking booking = new Booking(new Date(parts[1]), createVehicle(parts[2], null,null,null,null));
         if(!reservation.findInstanceOfVehicle(booking)){
             System.out.println(parts[2] + " booked with ending date " + parts[1] + " - cannot find the booking.");
             return;
@@ -453,22 +605,24 @@ public class Frontend {
         moveFromReservationToTripList(originalBooking, originalMileage, currentMileage);
     }
 
+    //__________________________________________________________________________________________________________
+
+
     /**
-     * Prints all vehicles in the fleet ordered by make and obtained date.
+     * Prints all vehicles in the fleet ordered by location, make, then obtained date.
      */
-    //TODO: MUST MODIFY
     private void displayVehicles(){
         if(fleet.getSize() == 0){
             System.out.println("There is no vehicle in the fleet.");
             return;
         }
-        System.out.println("*List of vehicles in the fleet, ordered by make and date obtained.");
+        System.out.println("*List of vehicles in the fleet, ordered by location/make/date obtained.");
         fleet.printByMake();
         System.out.println("*end of list.");
     }
 
     /**
-     * Prints reservations ordered by license plate and beginning date.
+     * Prints reservations ordered by location, license plate, then beginning date.
      */
     //TODO: MUST MODIFY
     private void displayBookings1(){
@@ -476,7 +630,7 @@ public class Frontend {
             System.out.println("There is no booking record.");
             return;
         }
-        System.out.println("*List of reservations ordered by license plate number and beginning date.");
+        System.out.println("*List of reservations ordered by location/license plate/beginning date.");
         reservation.printByVehicle();
         System.out.println("*end of list.");
         System.out.println();
@@ -500,7 +654,7 @@ public class Frontend {
      */
     private void displayCompletedTrips(){
         if(tripList.getLast() == null){
-            System.out.println("There is no archived trips.");
+            System.out.println("There is no archived trips for the cost report.");
             return;
         }
         System.out.println("*List of completed trips ordered by ending date.");
@@ -508,12 +662,26 @@ public class Frontend {
         System.out.println("*end of list.");
     }
 
+    //TODO
+    private void displayCostReport(){
+        if(tripList.getLast() == null){
+            System.out.println("There is no archived trips for the cost report.");
+            return;
+        }
+        System.out.println("*List of completed trips ordered by ending date.");
+        //tripList.printCharges();
+        System.out.println("*end of list.");
+    }
+
     //TODO: MUST ADD "PC" API METHOD CALL
+
+    //__________________________________________________________________________________________________________
+
 
     /**
      * Runs the command loop for the Vehicle Management System.
      */
-    public void run() {
+    public void run(){
         System.out.println("Vehicle Management System is running.");
         Scanner sc = new Scanner(System.in);
         while (running) {

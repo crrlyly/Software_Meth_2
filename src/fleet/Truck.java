@@ -1,23 +1,24 @@
 package fleet;
 
 public class Truck extends Vehicle{
-    private static final double TRUCK_RATE = 0.50;
-
     public Truck(String plate) {
         super(plate);
     }
 
-    public Truck(String plate, Date obtained, Make make, int mileage) {
-        super(plate, obtained, make, mileage);
+    public Truck(String plate, Date obtained, Make make, int mileage, Campus campus) {
+        super(plate, obtained, make, mileage, campus);
     }
 
     @Override
     public double charge(int mileageUsed){
-        return 1.0;
+        return (mileageUsed * 2.99);
     }
 
     @Override
     public double surcharge(int mileageUsed, boolean surcharge){
-        return 1.0;
+        if(surcharge){
+            return (mileageUsed * 2.99) + 39.99;
+        }
+        return -1;
     }
 }
