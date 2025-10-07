@@ -70,6 +70,9 @@ public class Frontend {
             case "PT":
                 displayCompletedTrips();
                 break;
+            case "PC":
+                displayCostReport();
+                break;
             default:
                 System.out.println(cmd + " - invalid command!");
         }
@@ -227,11 +230,22 @@ public class Frontend {
      * @param originalMileage the mileage at trip start
      * @param currentMileage the mileage at trip end
      */
-    private void moveFromReservationToTripList(Booking originalBooking, int originalMileage, int currentMileage){
+    private void moveFromReservationToTripList(Booking originalBooking, int originalMileage, int currentMileage) {
+        if (originalBooking == null) return;
         reservation.remove(originalBooking);
-        originalBooking.getVehicle().setMileage(currentMileage);
-        Trip trip = new Trip(originalBooking, originalMileage, currentMileage);
-        System.out.println("Trip completed: " + trip.toString());
+
+        Vehicle v = originalBooking.getVehicle();
+        Campus pickup  = v.getCampus();
+        Campus dropoff = originalBooking.getDropoff();
+        boolean surcharge = (dropoff != null) && !dropoff.equals(pickup);
+        Trip originalTrip = new Trip(originalBooking,originalMileage,currentMileage,surcharge);
+        System.out.println("Trip completed: " + originalTrip.toString());
+
+        v.setMileage(currentMileage);
+        if (dropoff != null) {
+            v.setCampus(dropoff);
+        }
+        Trip trip = new Trip(originalBooking, originalMileage, currentMileage, surcharge);
         tripList.add(trip);
     }
 
@@ -243,18 +257,16 @@ public class Frontend {
      * @return the index of the earliest ending booking for that vehicle;
      * -1 if none is found
      */
-    private int findIndexOfEarliestEndDate(Booking booking){
+    private Date findEarliestEndDate(Booking booking){
         Date earliest = booking.getEnd();
         int index = -1;
         for(int i = 0; i < reservation.Size(); i++){
-            if(reservation.toArray()[i].getVehicle().equals(booking.getVehicle())){
-                if(reservation.toArray()[i].getEnd().compareTo(earliest) <= 0){
-                    earliest = reservation.toArray()[i].getEnd();
-                    index = i;
-                }
+            if(reservation.toArray()[i].getEnd().compareTo(earliest) <= 0){
+                earliest = reservation.toArray()[i].getEnd();
             }
+
         }
-        return index;
+        return earliest;
     }
 
     /**
@@ -466,7 +478,6 @@ public class Frontend {
      *
      * @param parts tokenized input (must be length 2)
      */
-    //TODO: MUST MODIFY?
     private void removeFromFleet(String[] parts){
         if(!checkCommandParse(parts,2,"D")){
             return;
@@ -542,7 +553,7 @@ public class Frontend {
             return false;
         }
         if (!isVehicleAvailableSelf(startingDate, endingDate, parts[4])) {
-            System.out.println(parts[4].toUpperCase() + " - has an existing booking conflicting with the booking date "
+            System.out.println(parts[4].toUpperCase() + " - has an existing booking conflicting with booking date "
                     + parts[1] + " ~ " + parts[2]);
             return false;
         }
@@ -558,7 +569,6 @@ public class Frontend {
      *
      * @param parts tokenized input (must be length 5)
      */
-    //TODO: In Progress
     private void bookVehicle(String[] parts){
         if(!checkCommandParse(parts, 6,"B")){
             return;
@@ -577,8 +587,6 @@ public class Frontend {
         Booking booking = new Booking(startingDate, endingDate, employee, fleet.getVehicle(vehicle), campus);
         System.out.println(booking.toString() + " booked.");
         reservation.add(booking);
-
-        //58719D:TOYOTA [Livingston:New Brunswick] 11/24/2025 ~ 11/30/2025 [drop off:Busch] [LIM] booked.
     }
 
     //__________________________________________________________________________________________________________
@@ -608,6 +616,16 @@ public class Frontend {
     //__________________________________________________________________________________________________________
 
 
+    private Booking findBooking(Booking findBooking){
+        for(int i = 0; i < reservation.Size(); i++){
+            if(reservation.toArray()[i].equalsNoBeginDate(findBooking)){
+                return reservation.toArray()[i];
+            }
+
+        }
+        return null;
+    }
+
     /**
      * Returns a vehicle and archives the trip.
      *
@@ -618,32 +636,35 @@ public class Frontend {
         if(!checkCommandParse(parts, 4,"R")){
             return;
         }
+        //System.out.println(parts[2]);
         Booking booking = new Booking(new Date(parts[1]), createVehicle(parts[2], null,null,null,null));
         if(!reservation.findInstanceOfVehicle(booking)){
             System.out.println(parts[2] + " booked with ending date " + parts[1] + " - cannot find the booking.");
             return;
         }
-        int index = findIndexOfEarliestEndDate(booking);
-        if(index == -1){
-            System.out.println("Not Found");
+        Date earliest = findEarliestEndDate(booking); //check to see
+        if(earliest.compareTo(booking.getEnd()) != 0){
+            System.out.println("Not the earliest end date.");
             return;
         }
-        if(!reservation.toArray()[index].getEnd().equals(booking.getEnd())){
+        Date currEnd = booking.getEnd();
+        if(currEnd.compareTo(earliest) > 0){
             System.out.println(parts[2] + " booked with ending date " + parts[1] + " - returning not in order of ending date.");
             return;
         }
-        int currentMileage = Integer.parseInt(parts[3]);
-        if (!isValidOdometer(currentMileage)) {
+        int newMileage = Integer.parseInt(parts[3]);
+        if (!isValidOdometer(newMileage)) {
             System.out.println(parts[3] + " - invalid mileage.");
             return;
         }
-        Booking originalBooking = reservation.toArray()[index];
+        Booking originalBooking = findBooking(booking);
         int originalMileage = originalBooking.getVehicle().getMileage();
-        if(currentMileage <= originalMileage){
+        //System.out.println("VEHICLE: " + originalBooking.getVehicle().toString());
+        if(newMileage <= originalMileage){
             System.out.println("Invalid mileage - current mileage: " + originalMileage + " entered mileage: " + parts[3]);
             return;
         }
-        moveFromReservationToTripList(originalBooking, originalMileage, currentMileage);
+        moveFromReservationToTripList(originalBooking, originalMileage, newMileage);
     }
 
     //__________________________________________________________________________________________________________
@@ -665,6 +686,7 @@ public class Frontend {
     /**
      * Prints reservations ordered by location, license plate, then beginning date.
      */
+    //TODO SOMETHING WRONG HERE
     private void displayBookings1(){
         if(reservation.Size() == 0){
             System.out.println("There is no booking record.");
@@ -690,14 +712,15 @@ public class Frontend {
     }
 
     /**
-     * Prints archived trips ordered by ending date.
+     * Prints archived trips ordered by license plate and ending date.
      */
+    //TODO SOMETHING IS WRONG HERE
     private void displayCompletedTrips(){
         if(tripList.getLast() == null){
             System.out.println("There is no archived trips for the cost report.");
             return;
         }
-        System.out.println("*List of completed trips ordered by ending date.");
+        System.out.println("*List of completed trips ordered by license plate and ending date.");
         tripList.print();
         System.out.println("*end of list.");
     }
@@ -712,8 +735,6 @@ public class Frontend {
         //tripList.printCharges();
         System.out.println("*end of list.");
     }
-
-    //TODO: MUST ADD "PC" API METHOD CALL
 
     //__________________________________________________________________________________________________________
 

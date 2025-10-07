@@ -76,27 +76,6 @@ public class TripList extends List<Trip>{
     }
 
     /**
-     * Returns the amount of trips in the trip linked list.
-     *
-     * @return count, the number of trips in the triplist
-     */
-    public int getSize() {
-        if (last == null) {
-            return 0;
-        }
-
-        int count = 0;
-        Node curr = last.next; // head
-
-        do {
-            count++;
-            curr = curr.next;
-        } while (curr != last.next);
-
-        return count;
-    }
-
-    /**
      * Returns the last node in the linked list.
      *
      * @return last the last node in the linked list

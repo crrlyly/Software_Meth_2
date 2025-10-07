@@ -169,4 +169,5 @@ public class Booking {
     public boolean equalsNoDate(Booking booking){
         return this.vehicle.equals(booking.vehicle);
     }
+
 }

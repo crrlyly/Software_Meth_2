@@ -18,10 +18,11 @@ public class Trip {
      * @param beginMileage the beginning mileage given
      * @param endMileage the ending mileage given
      */
-    public Trip(Booking booking, int beginMileage, int endMileage) {
+    public Trip(Booking booking, int beginMileage, int endMileage, boolean surcharge) {
         this.booking = booking;
         this.beginMileage = beginMileage;
         this.endMileage = endMileage;
+        this.surcharge = surcharge;
     }
 
     /**
