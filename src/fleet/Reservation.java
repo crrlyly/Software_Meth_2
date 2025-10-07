@@ -96,5 +96,11 @@ public class Reservation extends List<Booking>{
         }
         return false;
     }
+
+    public Booking[] toArray() {
+        Booking[] out = new Booking[Size()];
+        for (int i = 0; i < Size(); i++) out[i] = get(i);
+        return out;
+    }
 }
 

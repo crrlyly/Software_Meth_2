@@ -1,5 +1,7 @@
 package fleet;
 import Util.Date;
+import Util.List;
+import Util.Sort;
 import java.util.Scanner;
 import java.util.Calendar;
 import java.io.File;
@@ -167,7 +169,7 @@ public class Frontend {
      * @return true if no existing booking for the vehicle overlaps the range; false otherwise
      */
     private boolean isVehicleAvailable(Vehicle vehicle, Date reqStart, Date reqEnd) {
-        Booking[] all = reservation.getBookings();
+        Booking[] all = reservation.toArray();
         if (all == null) return true;
         for (int i = 0; i < all.length; i++) {
             Booking b = all[i];
@@ -190,7 +192,7 @@ public class Frontend {
      * @return true if the employee has no overlapping bookings; false otherwise
      */
     private boolean isVehicleAvailableSelf(Date reqStart, Date reqEnd, String employee) {
-        Booking[] all = reservation.getBookings();
+        Booking[] all = reservation.toArray();
         if (all == null) return true;
         for (int i = 0; i < all.length; i++) {
             Booking b = all[i];
@@ -244,10 +246,10 @@ public class Frontend {
     private int findIndexOfEarliestEndDate(Booking booking){
         Date earliest = booking.getEnd();
         int index = -1;
-        for(int i = 0; i < reservation.getSize(); i++){
-            if(reservation.getBookings()[i].getVehicle().equals(booking.getVehicle())){
-                if(reservation.getBookings()[i].getEnd().compareTo(earliest) <= 0){
-                    earliest = reservation.getBookings()[i].getEnd();
+        for(int i = 0; i < reservation.Size(); i++){
+            if(reservation.toArray()[i].getVehicle().equals(booking.getVehicle())){
+                if(reservation.toArray()[i].getEnd().compareTo(earliest) <= 0){
+                    earliest = reservation.toArray()[i].getEnd();
                     index = i;
                 }
             }
@@ -540,7 +542,8 @@ public class Frontend {
             return false;
         }
         if (!isVehicleAvailableSelf(startingDate, endingDate, parts[4])) {
-            System.out.println(parts[4].toUpperCase() + " - has an existing booking conflicting with the beginning date " + parts[1]);
+            System.out.println(parts[4].toUpperCase() + " - has an existing booking conflicting with the booking date "
+                    + parts[1] + " ~ " + parts[2]);
             return false;
         }
         if(campus == null){
@@ -625,7 +628,7 @@ public class Frontend {
             System.out.println("Not Found");
             return;
         }
-        if(!reservation.getBookings()[index].getEnd().equals(booking.getEnd())){
+        if(!reservation.toArray()[index].getEnd().equals(booking.getEnd())){
             System.out.println(parts[2] + " booked with ending date " + parts[1] + " - returning not in order of ending date.");
             return;
         }
@@ -634,7 +637,7 @@ public class Frontend {
             System.out.println(parts[3] + " - invalid mileage.");
             return;
         }
-        Booking originalBooking = reservation.getBookings()[index];
+        Booking originalBooking = reservation.toArray()[index];
         int originalMileage = originalBooking.getVehicle().getMileage();
         if(currentMileage <= originalMileage){
             System.out.println("Invalid mileage - current mileage: " + originalMileage + " entered mileage: " + parts[3]);
@@ -662,9 +665,8 @@ public class Frontend {
     /**
      * Prints reservations ordered by location, license plate, then beginning date.
      */
-    //TODO: MUST MODIFY
     private void displayBookings1(){
-        if(reservation.getSize() == 0){
+        if(reservation.Size() == 0){
             System.out.println("There is no booking record.");
             return;
         }
@@ -678,7 +680,7 @@ public class Frontend {
      * Prints reservations ordered by department and employee.
      */
     private void displayBookings2(){
-        if(reservation.getSize() == 0){
+        if(reservation.Size() == 0){
             System.out.println("There is no booking record.");
             return;
         }
