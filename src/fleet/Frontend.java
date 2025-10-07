@@ -268,11 +268,11 @@ public class Frontend {
     private Vehicle createVehicle(String plate, Date date, Make make, Integer odo, Campus campus){
         switch(plate.charAt(plate.length() - 1)){
             case 'D':
-                return new Utility(plate,date,make,odo,campus);
+                return odo != null ? new Utility(plate,date,make,odo,campus) : new Utility(plate);
             case 'X':
-                return new Truck(plate,date,make,odo,campus);
+                return odo != null ? new Truck(plate,date,make,odo,campus) : new Truck(plate);
             case 'S':
-                return new Sedan(plate,date,make,odo,campus);
+                return odo != null ? new Sedan(plate,date,make,odo,campus) : new Sedan(plate);
             default:
                 System.out.println("Unknown vehicle type: " + plate);
                 return null;
@@ -292,7 +292,7 @@ public class Frontend {
         if(command.equals("A")){
             commandString = "adding";
         }
-        else if (command.equals("R")){
+        else if (command.equals("D")){
             commandString = "removing";
         }
         if(parts.length != len){
@@ -439,7 +439,7 @@ public class Frontend {
         }
         Date isValidDate = new Date(parts[2]);
         int odo = Integer.parseInt(parts[4]);
-        Vehicle vehicle = createVehicle(parts[0], isValidDate, make, odo, campus);
+        Vehicle vehicle = createVehicle(parts[1], isValidDate, make, odo, campus);
         fleet.add(vehicle);
         System.out.println(vehicle.toString() + " has been added to the fleet.");
     }
@@ -475,7 +475,7 @@ public class Frontend {
             return;
         }
         Vehicle getOriginalVehicle = fleet.getVehicle(vehicle);
-        System.out.println(getOriginalVehicle.toString() + " has been removed from the fleet.");
+        System.out.println(getOriginalVehicle.getPlate() + " has been removed from the fleet.");
         fleet.remove(vehicle);
     }
 
@@ -571,10 +571,11 @@ public class Frontend {
                         threeMonthsFromToday, employee, campus)){
             return;
         }
-//        Booking booking = new Booking(startingDate, endingDate, employee, fleet.getVehicle(vehicle), campus);
-//        System.out.println(booking.getVehicle().toString() + " [beginning " + booking.getBegin() + " ending "
-//                + booking.getEnd() + ":" + booking.getEmployee() + "] booked.");
-//        reservation.add(booking);
+        Booking booking = new Booking(startingDate, endingDate, employee, fleet.getVehicle(vehicle), campus);
+        System.out.println(booking.toString() + " booked.");
+        reservation.add(booking);
+
+        //58719D:TOYOTA [Livingston:New Brunswick] 11/24/2025 ~ 11/30/2025 [drop off:Busch] [LIM] booked.
     }
 
     //__________________________________________________________________________________________________________

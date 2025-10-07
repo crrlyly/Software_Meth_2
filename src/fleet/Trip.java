@@ -68,7 +68,7 @@ public class Trip {
         String mileageUsed = Integer.toString(endMileage - beginMileage);
         String surchargeAsterick = surcharge ? "**" : "";
         return plate + " " + beginDate + " ~ " + endDate + " mileage(old): " + originalMileage
-                + " mileage(new): " + currentMileage + " mileage(used): " + mileageUsed + " [dropped off: " + /* booking.getdropoff() +
-                + surchargeAsterick + */"]";
+                + " mileage(new): " + currentMileage + " mileage(used): " + mileageUsed + " [dropped off: " + this.booking.getDropoff()
+                + surchargeAsterick + "] [picked up:" + this.booking.getVehicle().getCampus() + "]";
     }
 }
