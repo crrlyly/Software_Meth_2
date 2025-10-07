@@ -1,7 +1,5 @@
 package fleet;
 import Util.Date;
-import Util.List;
-import Util.Sort;
 import java.util.Scanner;
 import java.util.Calendar;
 import java.io.File;
@@ -236,14 +234,14 @@ public class Frontend {
 
         Vehicle v = originalBooking.getVehicle();
         Campus pickup  = v.getCampus();
-        Campus dropoff = originalBooking.getDropoff();
-        boolean surcharge = (dropoff != null) && !dropoff.equals(pickup);
+        Campus dropOff = originalBooking.getDropoff();
+        boolean surcharge = (dropOff != null) && !dropOff.equals(pickup);
         Trip originalTrip = new Trip(originalBooking,originalMileage,currentMileage,surcharge);
         System.out.println("Trip completed: " + originalTrip.toString());
 
         v.setMileage(currentMileage);
-        if (dropoff != null) {
-            v.setCampus(dropoff);
+        if (dropOff != null) {
+            v.setCampus(dropOff);
         }
         Trip trip = new Trip(originalBooking, originalMileage, currentMileage, surcharge);
         tripList.add(trip);
