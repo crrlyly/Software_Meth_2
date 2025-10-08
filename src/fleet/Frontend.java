@@ -642,7 +642,7 @@ public class Frontend {
         }
         Date earliest = findEarliestEndDate(booking); //check to see
         if(earliest.compareTo(booking.getEnd()) != 0){
-            System.out.println("Not the earliest end date.");
+            System.out.println(parts[2] + " booked with end date " + parts[1] + " - returning not in order of ending date.");
             return;
         }
         Date currEnd = booking.getEnd();
@@ -684,6 +684,7 @@ public class Frontend {
     /**
      * Prints reservations ordered by location, license plate, then beginning date.
      */
+    //dont test it out
     //TODO SOMETHING WRONG HERE
     private void displayBookings1(){
         if(reservation.Size() == 0){
@@ -715,7 +716,7 @@ public class Frontend {
     //TODO SOMETHING IS WRONG HERE
     private void displayCompletedTrips(){
         if(tripList.getLast() == null){
-            System.out.println("There is no archived trips for the cost report.");
+            System.out.println("There is no completed trips.");
             return;
         }
         System.out.println("*List of completed trips ordered by license plate and ending date.");
@@ -730,7 +731,7 @@ public class Frontend {
             return;
         }
         System.out.println("*List of completed trips ordered by ending date.");
-        //tripList.printCharges();
+        tripList.printCharges();
         System.out.println("*end of list.");
     }
 
