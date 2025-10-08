@@ -140,7 +140,7 @@ public class TripList extends List<Trip>{
                 double charge = t.getBooking().getVehicle().charge(used);
                 double surcharge = 0;
                 if(t.isSurcharge())
-                    surcharge = t.getBooking().getVehicle().surcharge();
+                    surcharge = t.getBooking().getVehicle().surcharge(used,t.isSurcharge());
                 deptTotal += charge + surcharge;
             }
             System.out.println("  <*>Department total: $ " + deptTotal);
