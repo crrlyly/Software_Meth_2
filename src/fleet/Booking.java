@@ -116,6 +116,15 @@ public class Booking {
     }
 
     /**
+     * Returns the drop-off campus location
+     * .
+     * @return the campus
+     */
+    public Campus getDropoff() {
+        return dropoff;
+    }
+
+    /**
      * Tests if two bookings with beginning dates, ending dates, and a vehicle are equal to each other.
      *
      * @param obj   the reference object with which to compare.
@@ -136,8 +145,9 @@ public class Booking {
      */
     @Override
     public String toString() {
-        return this.vehicle.toString() + this.begin.toString() + " ~ "
-                + this.end.toString() + " ["+ this.dropoff+"] "+this.employee + "]";
+        return this.vehicle.getPlate() + ":" + this.vehicle.getMake() + " [" + this.vehicle.getCampus() + ":" +
+                this.vehicle.getCampus().getCity() + "] " + this.begin.toString() + " ~ "
+                + this.end.toString() + " [drop off:" + this.dropoff + "] [" + this.employee + "]";
     }
 
     /**
@@ -159,4 +169,5 @@ public class Booking {
     public boolean equalsNoDate(Booking booking){
         return this.vehicle.equals(booking.vehicle);
     }
+
 }

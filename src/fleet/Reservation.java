@@ -22,7 +22,7 @@ public class Reservation extends List<Booking>{
      * Prints the reservation list in the order of the plates of the vehicle, then beginning date of the reservation.
      */
     public void printByVehicle() {
-        Sort.sortByPlateThenDate(this);
+        Sort.sortByLocationThenPlateThenDate(this);
         for (int i = 0; i < Size(); i++) {
             System.out.println(get(i));
         }
@@ -40,7 +40,7 @@ public class Reservation extends List<Booking>{
                 dept = get(i).getEmployee().getDept();
                 System.out.println("--" + dept.convertToWords() + "--");
             }
-            System.out.println(get(i));
+            System.out.println("\t" + get(i));
         }
     }
 
@@ -95,6 +95,12 @@ public class Reservation extends List<Booking>{
             }
         }
         return false;
+    }
+
+    public Booking[] toArray() {
+        Booking[] out = new Booking[Size()];
+        for (int i = 0; i < Size(); i++) out[i] = get(i);
+        return out;
     }
 }
 

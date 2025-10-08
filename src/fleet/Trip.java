@@ -18,10 +18,11 @@ public class Trip {
      * @param beginMileage the beginning mileage given
      * @param endMileage the ending mileage given
      */
-    public Trip(Booking booking, int beginMileage, int endMileage) {
+    public Trip(Booking booking, int beginMileage, int endMileage, boolean surcharge) {
         this.booking = booking;
         this.beginMileage = beginMileage;
         this.endMileage = endMileage;
+        this.surcharge = surcharge;
     }
 
     /**
@@ -68,7 +69,7 @@ public class Trip {
         String mileageUsed = Integer.toString(endMileage - beginMileage);
         String surchargeAsterick = surcharge ? "**" : "";
         return plate + " " + beginDate + " ~ " + endDate + " mileage(old): " + originalMileage
-                + " mileage(new): " + currentMileage + " mileage(used): " + mileageUsed + " [dropped off: " + /* booking.getdropoff() +
-                + surchargeAsterick + */"]";
+                + " mileage(new): " + currentMileage + " mileage(used): " + mileageUsed + " [dropped off: " + this.booking.getDropoff()
+                + surchargeAsterick + "] [picked up:" + this.booking.getVehicle().getCampus() + "]";
     }
 }

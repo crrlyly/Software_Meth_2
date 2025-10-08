@@ -3,7 +3,7 @@ import fleet.Booking;
 
 public class Sort {
 
-    public static void sortByPlateThenDate(List<Booking> list) {
+    public static void sortByLocationThenPlateThenDate(List<Booking> list) {
         for (int i = 1; i < list.Size(); i++) {
             Booking key = list.get(i);
             int index = i - 1;

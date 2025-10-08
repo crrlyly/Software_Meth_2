@@ -153,5 +153,11 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         this.mileage = mileage;
     }
 
+    public Campus getCampus() {
+        return campus;
+    }
 
+    public void setCampus(Campus campus) {
+        this.campus = campus;
+    }
 }
