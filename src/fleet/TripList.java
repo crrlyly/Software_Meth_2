@@ -21,7 +21,10 @@ public class TripList extends List<Trip>{
      *
      * @param trip , the trip object to be added to the list
      */
+    @Override
     public void add(Trip trip) {
+        if (trip == null)
+            return;
         Node newNode = new Node(trip);
 
         if (last == null) {
@@ -33,14 +36,18 @@ public class TripList extends List<Trip>{
         Node curr = last.next; // head
         Node prev = last;
 
-        // If new trip ends before or equal to head trip, insert at beginning
-        if (trip.getBooking().getEnd().compareTo(curr.trip.getBooking().getEnd()) <= 0) {
+        int compare = compareTrips(trip, curr.trip);
+        // If trip ends before or equal to head
+        if (compare<0) {
             newNode.next = curr;
             last.next = newNode;
             return;
         }
 
-        if (trip.getBooking().getEnd().compareTo(last.trip.getBooking().getEnd()) >= 0) {
+        // if new trip ends after or equal to the last trip
+        compare = compareTrips(trip, curr.trip);
+
+        if (compare>=0) {
             newNode.next = curr;      // new last  point to head
             last.next = newNode;      // previous last points to new last
             last = newNode;           // update last
@@ -48,7 +55,12 @@ public class TripList extends List<Trip>{
         }
 
         // Traverse to find insertion point
-        while (curr != last && trip.getBooking().getEnd().compareTo(curr.trip.getBooking().getEnd()) >= 0) {
+        while (curr != last) {
+            compare = compareTrips(trip, curr.trip);
+
+            if (compare < 0)
+                break;
+
             prev = curr;
             curr = curr.next;
         }
@@ -58,6 +70,12 @@ public class TripList extends List<Trip>{
         prev.next = newNode;
     }
 
+    private int compareTrips(Trip t1, Trip t2) {
+        int cmp = t1.getBooking().getEnd().compareTo(t2.getBooking().getEnd());
+        if (cmp == 0)
+            cmp = t1.getBooking().getVehicle().getPlate().compareTo(t2.getBooking().getVehicle().getPlate());
+        return cmp;
+    }
     /**
      * Prints all the trips in the trip linked list.
      */
