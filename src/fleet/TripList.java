@@ -136,9 +136,11 @@ public class TripList extends List<Trip>{
             for (int j = 0; j < depts[i].Size(); j++) {
                 Trip t = depts[i].get(j);
                 System.out.println("\t" + t); // Trip.toString() prints all details
-                int used = t.getEndMilage() - t.getBeginMilage();
+                int used = t.getEndMileage() - t.getBeginMileage();
                 double charge = t.getBooking().getVehicle().charge(used);
-                double surcharge = t.isSurcharge() ? t.getBooking().getVehicle().surcharge() : 0;
+                double surcharge = 0;
+                if(t.isSurcharge())
+                    surcharge = t.getBooking().getVehicle().surcharge();
                 deptTotal += charge + surcharge;
             }
             System.out.println("  <*>Department total: $ " + deptTotal);
