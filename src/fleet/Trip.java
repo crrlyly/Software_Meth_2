@@ -82,7 +82,7 @@ public class Trip {
         String surchargeAsterick = surcharge ? "**" : "";
         return plate + " " + beginDate + " ~ " + endDate + " mileage(old): " + originalMileage
                 + " mileage(new): " + currentMileage + " mileage(used): " + mileageUsed + " [dropped off: " + this.booking.getDropoff()
-                + surchargeAsterick + "] [picked up:" + this.booking.getVehicle().getCampus() + "]";
+                + surchargeAsterick + "] [picked up: " + this.booking.getVehicle().getCampus() + "]";
     }
 
 

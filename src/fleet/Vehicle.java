@@ -59,6 +59,20 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         return this.plate != null && this.plate.equals(other.plate);
     }
 
+    private String findType(String plate){
+        switch(plate.charAt(plate.length() - 1)){
+            case 'D':
+                return "Utility";
+            case 'X':
+                return "Truck";
+            case 'S':
+                return "Sedan";
+            default:
+                System.out.println("Unknown vehicle type: " + plate);
+                return null;
+        }
+    }
+
     /**
      * Method that creates a String that shows the information of the Vehicle.
      *
@@ -66,7 +80,9 @@ public abstract class Vehicle implements Comparable<Vehicle> {
      */
     @Override
     public String toString() {
-        return this.plate + ":" + this.make + ":" + this.obtained + " [mileage:" + this.mileage + "] [" + this.campus +
+        String type = this.findType(plate);
+        return this.plate + "[" + this.make + ":" + type.toLowerCase() + "] " + this.obtained + " [mileage:" + this.mileage + "] " +
+                "[" + this.campus +
                 ":" + this.campus.getCity() + "]";
     }
 
