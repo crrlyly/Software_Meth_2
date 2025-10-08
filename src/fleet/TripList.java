@@ -101,4 +101,50 @@ public class TripList extends List<Trip>{
     public Node getLast() {
         return last;
     }
+
+    public void printCharges(){
+        if (last == null) { System.out.println("No trips in the list."); return; }
+
+        // Create per-department lists
+        List<Trip> ba = new List<>(), cs = new List<>(), ee = new List<>(), iti = new List<>(), math = new List<>();
+        Node curr = last.next;
+        do {
+            Trip t = curr.trip;
+            Department d = t.getBooking().getEmployee().getDept();
+            if (d == Department.BusinessAnalyticsAndInformationTechnology) ba.add(t);
+            else if (d == Department.ComputerScience) cs.add(t);
+            else if (d == Department.ElectricalEngineering) ee.add(t);
+            else if (d == Department.InformationTechnologyAndInformatics) iti.add(t);
+            else if (d == Department.Math) math.add(t);
+            curr = curr.next;
+        } while (curr != last.next);
+
+        System.out.println("*List of charges ordered by department.");
+
+        List<Trip>[] depts = new List[]{ba, cs, ee, iti, math};
+        Department[] deptEnums = new Department[]{
+                Department.BusinessAnalyticsAndInformationTechnology,
+                Department.ComputerScience,
+                Department.ElectricalEngineering,
+                Department.InformationTechnologyAndInformatics,
+                Department.Math
+        };
+
+        for (int i = 0; i < depts.length; i++) {
+            System.out.println("--" + deptEnums[i].convertToWords() + "--");
+            double deptTotal = 0;
+            for (int j = 0; j < depts[i].Size(); j++) {
+                Trip t = depts[i].get(j);
+                System.out.println("\t" + t); // Trip.toString() prints all details
+                int used = t.getEndMilage() - t.getBeginMilage();
+                double charge = t.getBooking().getVehicle().charge(used);
+                double surcharge = t.isSurcharge() ? t.getBooking().getVehicle().surcharge() : 0;
+                deptTotal += charge + surcharge;
+            }
+            System.out.println("  <*>Department total: $ " + deptTotal);
+        }
+
+        System.out.println("*end of list.");
+    }
+
 }
