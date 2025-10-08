@@ -9,8 +9,12 @@ public class Sort {
             int index = i - 1;
 
             while (index >= 0 && (
+
+                    list.get(index).getDropoff().compareTo(key.getDropoff()) > 0 ||
+
+                            (list.get(index).getDropoff().compareTo(key.getDropoff()) == 0 &&
                     // compare plate alphabetically
-                    list.get(index).getVehicle().getPlate().compareTo(key.getVehicle().getPlate()) > 0 ||
+                        list.get(index).getVehicle().getPlate().compareTo(key.getVehicle().getPlate()) > 0) ||
 
                             // if plates are equal, compare by beginDate
                             (list.get(index).getVehicle().getPlate().equals(key.getVehicle().getPlate()) &&
