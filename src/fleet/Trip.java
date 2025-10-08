@@ -34,6 +34,18 @@ public class Trip {
         return booking;
     }
 
+    public int getBeginMileage() {
+        return beginMileage;
+    }
+
+    public int getEndMileage() {
+        return endMileage;
+    }
+
+    public boolean isSurcharge() {
+        return surcharge;
+    }
+
     /**
      * Checks if this booking is equal to the given booking.
      *
@@ -72,4 +84,6 @@ public class Trip {
                 + " mileage(new): " + currentMileage + " mileage(used): " + mileageUsed + " [dropped off: " + this.booking.getDropoff()
                 + surchargeAsterick + "] [picked up:" + this.booking.getVehicle().getCampus() + "]";
     }
+
+
 }
