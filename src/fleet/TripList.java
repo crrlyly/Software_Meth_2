@@ -71,9 +71,9 @@ public class TripList extends List<Trip>{
     }
 
     private int compareTrips(Trip t1, Trip t2) {
-        int cmp = t1.getBooking().getEnd().compareTo(t2.getBooking().getEnd());
+        int cmp = t1.getBooking().getVehicle().getPlate().compareTo(t2.getBooking().getVehicle().getPlate());
         if (cmp == 0)
-            cmp = t1.getBooking().getVehicle().getPlate().compareTo(t2.getBooking().getVehicle().getPlate());
+            cmp = t1.getBooking().getEnd().compareTo(t2.getBooking().getEnd());
         return cmp;
     }
     /**
