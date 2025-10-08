@@ -10,7 +10,7 @@ public class Sort {
 
             while (index >= 0 && (
 
-                    list.get(index).getDropoff().compareTo(key.getDropoff()) > 0 ||
+                    list.get(index).getDropoff().getCity().compareTo(key.getDropoff().getCity()) > 0 ||
 
                             (list.get(index).getDropoff().compareTo(key.getDropoff()) == 0 &&
                     // compare plate alphabetically
