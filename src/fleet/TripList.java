@@ -123,6 +123,7 @@ public class TripList extends List<Trip>{
         List<Trip>[] depts = new List[]{ba, cs, ee, iti, math};
         Department[] deptEnums = Department.toArray();
         for (int i = 0; i < depts.length; i++) {
+            if (depts[i].Size() == 0) continue;
             System.out.println("--" + deptEnums[i].convertToWords() + "--");
             double deptTotal = 0;
             for (int j = 0; j < depts[i].Size(); j++) {
