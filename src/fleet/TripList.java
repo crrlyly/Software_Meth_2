@@ -129,7 +129,7 @@ public class TripList extends List<Trip>{
     }
 
     public void printCharges(){
-        DecimalFormat df = new DecimalFormat("0,000.00");
+        DecimalFormat df = new DecimalFormat("###,###,##0.00");
         if (last == null) { System.out.println("No trips in the list."); return; }
         List<Trip> ba = new List<>(), cs = new List<>(), ee = new List<>(), iti = new List<>(), math = new List<>();
         groupTripsByDepartment(ba, cs, ee, iti, math);
