@@ -154,9 +154,9 @@ public class TripList extends List<Trip>{
                 if (surcharge ==0)
                     surcharge1 = "no";
                 deptTotal += charge + surcharge;
-                System.out.println("\t\t\t" + "[charge: $"+charge1+"] [surcharge: "+surcharge1 + "] [total charge: $" + (charge+surcharge)+"]");
+                System.out.println("\t\t\t" + "[charge: $"+charge1+"] [surcharge: "+surcharge1 + "] [total charge: $" + df.format((charge+surcharge))+"]");
             }
-            System.out.println("  <*>Department total: $ " + deptTotal);
+            System.out.println("  <*>Department total: $ " + df.format(deptTotal));
         }
         System.out.println("*end of list.");
     }
