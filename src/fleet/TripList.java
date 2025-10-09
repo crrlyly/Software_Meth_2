@@ -92,30 +92,6 @@ public class TripList extends List<Trip>{
         return last;
     }
 
-    private void groupTripsByDepartment(
-            List<Trip> ba, List<Trip> cs, List<Trip> ee,
-            List<Trip> iti, List<Trip> math) {
-
-        Node curr = last.next;
-        do {
-            Trip t = curr.trip;
-            Department d = t.getBooking().getEmployee().getDept();
-
-            if (d == Department.BusinessAnalyticsAndInformationTechnology)
-                ba.add(t);
-            else if (d == Department.ComputerScience)
-                cs.add(t);
-            else if (d == Department.ElectricalEngineering)
-                ee.add(t);
-            else if (d == Department.InformationTechnologyAndInformatics)
-                iti.add(t);
-            else if (d == Department.Math)
-                math.add(t);
-
-            curr = curr.next;
-        } while (curr != last.next);
-    }
-
     public void printCharges(){
         DecimalFormat df = new DecimalFormat("###,###,##0.00");
         if (last == null) { System.out.println("No trips in the list."); return; }
@@ -147,6 +123,29 @@ public class TripList extends List<Trip>{
             System.out.println("  <*>Department total: $ " + df.format(deptTotal));
         }
         System.out.println("*end of list.");
+    }
+    private void groupTripsByDepartment(
+            List<Trip> ba, List<Trip> cs, List<Trip> ee,
+            List<Trip> iti, List<Trip> math) {
+
+        Node curr = last.next;
+        do {
+            Trip t = curr.trip;
+            Department d = t.getBooking().getEmployee().getDept();
+
+            if (d == Department.BusinessAnalyticsAndInformationTechnology)
+                ba.add(t);
+            else if (d == Department.ComputerScience)
+                cs.add(t);
+            else if (d == Department.ElectricalEngineering)
+                ee.add(t);
+            else if (d == Department.InformationTechnologyAndInformatics)
+                iti.add(t);
+            else if (d == Department.Math)
+                math.add(t);
+
+            curr = curr.next;
+        } while (curr != last.next);
     }
 
 }
