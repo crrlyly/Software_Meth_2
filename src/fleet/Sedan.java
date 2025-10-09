@@ -3,8 +3,6 @@ package fleet;
 import Util.Date;
 
 public class Sedan extends Vehicle{
-    private static final double SEDAN_RATE = 0.30;
-
     public Sedan(String plate) {
         super(plate);
     }
@@ -21,7 +19,7 @@ public class Sedan extends Vehicle{
     @Override
     public double surcharge(int mileageUsed, boolean surcharge){
         if(surcharge){
-            return (.3 * mileageUsed < 35.99 ? (.3 * mileageUsed) : 35.99);
+            return (.25 * mileageUsed < 35.99 ? (.25 * mileageUsed) : 35.99);
         }
         return -1;
     }

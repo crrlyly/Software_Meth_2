@@ -17,10 +17,10 @@ public enum Campus {
         return city;
     }
 
-    public static Campus parseCampus(String makeStr) {
+    public static Campus parseCampus(String campusStr) {
         Campus[] allCampus = Campus.values();
         for (int i = 0; i < allCampus.length; i++) {
-            if (allCampus[i].name().equalsIgnoreCase(makeStr)) {
+            if (allCampus[i].name().equalsIgnoreCase(campusStr)) {
                 return allCampus[i];
             }
         }

@@ -85,5 +85,18 @@ public class Trip {
                 + surchargeAsterick + "] [picked up: " + this.booking.getVehicle().getCampus() + "]";
     }
 
+    public String toStringNoPickup(){
+        String plate = booking.getVehicle().getPlate();
+        String beginDate = booking.getBegin().toString();
+        String endDate = booking.getEnd().toString();
+        String originalMileage = Integer.toString(beginMileage);
+        String currentMileage = Integer.toString(endMileage);
+        String mileageUsed = Integer.toString(endMileage - beginMileage);
+        String surchargeAsterick = surcharge ? "**" : "";
+        return plate + " " + beginDate + " ~ " + endDate + " mileage(old): " + originalMileage
+                + " mileage(new): " + currentMileage + " mileage(used): " + mileageUsed + " [dropped off: " + this.booking.getDropoff()
+                + surchargeAsterick + "]";
+    }
+
 
 }

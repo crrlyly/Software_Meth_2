@@ -28,16 +28,13 @@ public class TripList extends List<Trip>{
         if (trip == null)
             return;
         Node newNode = new Node(trip);
-
         if (last == null) {
             last = newNode;
             last.next = last; // circular link
             return;
         }
-
         Node curr = last.next; // head
         Node prev = last;
-
         int compare = compareTrips(trip, curr.trip);
         // If trip ends before or equal to head
         if (compare<0) {
@@ -45,29 +42,20 @@ public class TripList extends List<Trip>{
             last.next = newNode;
             return;
         }
-
-        // if new trip ends after or equal to the last trip
         compare = compareTrips(trip, last.trip);
-
         if (compare>=0) {
             newNode.next = curr;      // new last  point to head
             last.next = newNode;      // previous last points to new last
             last = newNode;           // update last
             return;
         }
-
-        // Traverse to find insertion point
         while (curr != last) {
             compare = compareTrips(trip, curr.trip);
-
             if (compare < 0)
                 break;
-
             prev = curr;
             curr = curr.next;
         }
-
-        // Insert between prev and curr
         newNode.next = curr;
         prev.next = newNode;
     }
@@ -90,7 +78,7 @@ public class TripList extends List<Trip>{
         Node curr = head;
 
         do {
-            System.out.println(curr.trip);
+            System.out.println(curr.trip.toStringNoPickup());
             curr = curr.next;
         } while (curr != head);
     }
@@ -142,7 +130,7 @@ public class TripList extends List<Trip>{
             double deptTotal = 0;
             for (int j = 0; j < depts[i].Size(); j++) {
                 Trip t = depts[i].get(j);
-                System.out.println("\t\t" + t); // Trip.toString() prints all details
+                System.out.println("\t" + t.toStringNoPickup()); // Trip.toString() prints all details
                 int used = t.getEndMileage() - t.getBeginMileage();
                 double charge = t.getBooking().getVehicle().charge(used);
                 double surcharge = 0;
@@ -154,7 +142,7 @@ public class TripList extends List<Trip>{
                 if (surcharge ==0)
                     surcharge1 = "no";
                 deptTotal += charge + surcharge;
-                System.out.println("\t\t\t" + "[charge: $"+charge1+"] [surcharge: "+surcharge1 + "] [total charge: $" + df.format((charge+surcharge))+"]");
+                System.out.println("\t\t" + "[charge: $"+charge1+"] [surcharge: "+surcharge1 + "] [total charge: $ " + df.format((charge+surcharge))+"]");
             }
             System.out.println("  <*>Department total: $ " + df.format(deptTotal));
         }

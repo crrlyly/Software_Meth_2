@@ -672,7 +672,7 @@ public class Frontend {
      * Prints all vehicles in the fleet ordered by location, make, then obtained date.
      */
     private void displayVehicles(){
-        if(fleet.getSize() == 0){
+        if(fleet.Size() == 0){
             System.out.println("There is no vehicle in the fleet.");
             return;
         }
@@ -721,6 +721,7 @@ public class Frontend {
         System.out.println("*List of completed trips ordered by license plate and ending date.");
         tripList.print();
         System.out.println("*end of list.");
+        System.out.println();
     }
 
     //TODO
@@ -730,6 +731,7 @@ public class Frontend {
             return;
         }
         tripList.printCharges();
+        System.out.println();
     }
 
     //__________________________________________________________________________________________________________
