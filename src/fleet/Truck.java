@@ -19,7 +19,7 @@ public class Truck extends Vehicle{
     @Override
     public double surcharge(int mileageUsed, boolean surcharge){
         if(surcharge){
-            return (mileageUsed * 2.99) + 39.99;
+            return 39.99;
         }
         return -1;
     }

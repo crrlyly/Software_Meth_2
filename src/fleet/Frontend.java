@@ -684,7 +684,6 @@ public class Frontend {
     /**
      * Prints reservations ordered by location, license plate, then beginning date.
      */
-    //dont test it out
     //TODO SOMETHING WRONG HERE
     private void displayBookings1(){
         if(reservation.Size() == 0){
@@ -730,9 +729,7 @@ public class Frontend {
             System.out.println("There is no archived trips for the cost report.");
             return;
         }
-        System.out.println("*List of completed trips ordered by ending date.");
         tripList.printCharges();
-        System.out.println("*end of list.");
     }
 
     //__________________________________________________________________________________________________________
