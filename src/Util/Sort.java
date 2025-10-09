@@ -12,12 +12,12 @@ public class Sort {
 
                     list.get(index).getVehicle().getCampus().getCity().compareTo(key.getVehicle().getCampus().getCity()) > 0 ||
 
-                            (list.get(index).getDropoff().compareTo(key.getDropoff()) == 0 &&
+                            (list.get(index).getVehicle().getCampus().getCity().compareTo(key.getVehicle().getCampus().getCity()) == 0 &&
                     // compare plate alphabetically
                         list.get(index).getVehicle().getPlate().compareTo(key.getVehicle().getPlate()) > 0) ||
 
                             // if plates are equal, compare by beginDate
-                            (list.get(index).getDropoff().compareTo(key.getDropoff()) == 0 && list.get(index).getVehicle().getPlate().equals(key.getVehicle().getPlate()) &&
+                            (list.get(index).getVehicle().getCampus().getCity().compareTo(key.getVehicle().getCampus().getCity()) == 0 && list.get(index).getVehicle().getPlate().equals(key.getVehicle().getPlate()) &&
                                     list.get(index).getBegin().compareTo(key.getBegin()) > 0)
             )) {
                 list.set(index + 1, list.get(index));
