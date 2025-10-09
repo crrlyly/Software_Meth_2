@@ -45,7 +45,7 @@ public class TripList extends List<Trip>{
         }
 
         // if new trip ends after or equal to the last trip
-        compare = compareTrips(trip, curr.trip);
+        compare = compareTrips(trip, last.trip);
 
         if (compare>=0) {
             newNode.next = curr;      // new last  point to head
