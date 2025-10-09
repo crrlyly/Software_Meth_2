@@ -104,21 +104,35 @@ public class TripList extends List<Trip>{
         return last;
     }
 
-    public void printCharges(){
-        DecimalFormat df = new DecimalFormat("0.00");
-        if (last == null) { System.out.println("No trips in the list."); return; }
-        List<Trip> ba = new List<>(), cs = new List<>(), ee = new List<>(), iti = new List<>(), math = new List<>();
+    private void groupTripsByDepartment(
+            List<Trip> ba, List<Trip> cs, List<Trip> ee,
+            List<Trip> iti, List<Trip> math) {
+
         Node curr = last.next;
         do {
             Trip t = curr.trip;
             Department d = t.getBooking().getEmployee().getDept();
-            if (d == Department.BusinessAnalyticsAndInformationTechnology) ba.add(t);
-            else if (d == Department.ComputerScience) cs.add(t);
-            else if (d == Department.ElectricalEngineering) ee.add(t);
-            else if (d == Department.InformationTechnologyAndInformatics) iti.add(t);
-            else if (d == Department.Math) math.add(t);
+
+            if (d == Department.BusinessAnalyticsAndInformationTechnology)
+                ba.add(t);
+            else if (d == Department.ComputerScience)
+                cs.add(t);
+            else if (d == Department.ElectricalEngineering)
+                ee.add(t);
+            else if (d == Department.InformationTechnologyAndInformatics)
+                iti.add(t);
+            else if (d == Department.Math)
+                math.add(t);
+
             curr = curr.next;
         } while (curr != last.next);
+    }
+
+    public void printCharges(){
+        DecimalFormat df = new DecimalFormat("0.00");
+        if (last == null) { System.out.println("No trips in the list."); return; }
+        List<Trip> ba = new List<>(), cs = new List<>(), ee = new List<>(), iti = new List<>(), math = new List<>();
+        groupTripsByDepartment(ba, cs, ee, iti, math);
         System.out.println("*List of charges ordered by department.");
         List<Trip>[] depts = new List[]{ba, cs, ee, iti, math};
         Department[] deptEnums = Department.toArray();
