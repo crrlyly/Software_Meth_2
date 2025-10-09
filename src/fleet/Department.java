@@ -20,11 +20,11 @@ public enum Department {
 
     public static Department[] toArray() {
         return new Department[]{
+                BusinessAnalyticsAndInformationTechnology,
                 ComputerScience,
                 ElectricalEngineering,
                 InformationTechnologyAndInformatics,
-                Math,
-                BusinessAnalyticsAndInformationTechnology
+                Math
         };
     }
 
