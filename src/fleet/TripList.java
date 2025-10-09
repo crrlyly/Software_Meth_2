@@ -1,5 +1,6 @@
 package fleet;
 import Util.List;
+import java.text.DecimalFormat;
 /**
  * This class creates a circularly linked list of trips.
  * Additionally, it inserts the trips in order of earliest end date, and can print the list/find the number of trips in the list.
@@ -7,6 +8,7 @@ import Util.List;
  * @author Alec Cotler
  */
 public class TripList extends List<Trip>{
+
     private Node last; //the reference to the last node of the linked list.
 
     /**
@@ -103,9 +105,8 @@ public class TripList extends List<Trip>{
     }
 
     public void printCharges(){
+        DecimalFormat df = new DecimalFormat("0.00");
         if (last == null) { System.out.println("No trips in the list."); return; }
-
-        // Create per-department lists
         List<Trip> ba = new List<>(), cs = new List<>(), ee = new List<>(), iti = new List<>(), math = new List<>();
         Node curr = last.next;
         do {
@@ -118,34 +119,30 @@ public class TripList extends List<Trip>{
             else if (d == Department.Math) math.add(t);
             curr = curr.next;
         } while (curr != last.next);
-
         System.out.println("*List of charges ordered by department.");
-
         List<Trip>[] depts = new List[]{ba, cs, ee, iti, math};
-        Department[] deptEnums = new Department[]{
-                Department.BusinessAnalyticsAndInformationTechnology,
-                Department.ComputerScience,
-                Department.ElectricalEngineering,
-                Department.InformationTechnologyAndInformatics,
-                Department.Math
-        };
-
+        Department[] deptEnums = Department.toArray();
         for (int i = 0; i < depts.length; i++) {
             System.out.println("--" + deptEnums[i].convertToWords() + "--");
             double deptTotal = 0;
             for (int j = 0; j < depts[i].Size(); j++) {
                 Trip t = depts[i].get(j);
-                System.out.println("\t" + t); // Trip.toString() prints all details
+                System.out.println("\t\t" + t); // Trip.toString() prints all details
                 int used = t.getEndMileage() - t.getBeginMileage();
                 double charge = t.getBooking().getVehicle().charge(used);
                 double surcharge = 0;
+                String charge1 = df.format(charge);
+                String surcharge1;
                 if(t.isSurcharge())
                     surcharge = t.getBooking().getVehicle().surcharge(used,t.isSurcharge());
+                surcharge1 = "$"+df.format(surcharge);
+                if (surcharge ==0)
+                    surcharge1 = "no";
                 deptTotal += charge + surcharge;
+                System.out.println("\t\t\t" + "[charge: $"+charge1+"] [surcharge: "+surcharge1 + "] [total charge: $" + (charge+surcharge)+"]");
             }
             System.out.println("  <*>Department total: $ " + deptTotal);
         }
-
         System.out.println("*end of list.");
     }
 

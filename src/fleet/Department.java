@@ -18,6 +18,16 @@ public enum Department {
     private Department() {
     }
 
+    public static Department[] toArray() {
+        return new Department[]{
+                ComputerScience,
+                ElectricalEngineering,
+                InformationTechnologyAndInformatics,
+                Math,
+                BusinessAnalyticsAndInformationTechnology
+        };
+    }
+
     /**
      * This method converts a department constant into it's respective grammatically correct String.
      *
