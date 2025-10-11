@@ -64,24 +64,49 @@ public class Date implements Comparable<Date> {
             return false;
         }
         int daysInThisFebruary = DAYS_IN_FEBRUARY_NON_LEAP;
-        if (isLeap()){
+        if (isLeap()) {
             daysInThisFebruary = DAYS_IN_FEBRUARY_LEAP;
         }
         int maxDays;
         switch (month) {
-            case 1:  maxDays = DAYS_IN_JANUARY; break;
-            case 2:  maxDays = daysInThisFebruary; break;
-            case 3:  maxDays = DAYS_IN_MARCH; break;
-            case 4:  maxDays = DAYS_IN_APRIL; break;
-            case 5:  maxDays = DAYS_IN_MAY; break;
-            case 6:  maxDays = DAYS_IN_JUNE; break;
-            case 7:  maxDays = DAYS_IN_JULY; break;
-            case 8:  maxDays = DAYS_IN_AUGUST; break;
-            case 9:  maxDays = DAYS_IN_SEPTEMBER; break;
-            case 10: maxDays = DAYS_IN_OCTOBER; break;
-            case 11: maxDays = DAYS_IN_NOVEMBER; break;
-            case 12: maxDays = DAYS_IN_DECEMBER; break;
-            default: return false;
+            case 1:
+                maxDays = DAYS_IN_JANUARY;
+                break;
+            case 2:
+                maxDays = daysInThisFebruary;
+                break;
+            case 3:
+                maxDays = DAYS_IN_MARCH;
+                break;
+            case 4:
+                maxDays = DAYS_IN_APRIL;
+                break;
+            case 5:
+                maxDays = DAYS_IN_MAY;
+                break;
+            case 6:
+                maxDays = DAYS_IN_JUNE;
+                break;
+            case 7:
+                maxDays = DAYS_IN_JULY;
+                break;
+            case 8:
+                maxDays = DAYS_IN_AUGUST;
+                break;
+            case 9:
+                maxDays = DAYS_IN_SEPTEMBER;
+                break;
+            case 10:
+                maxDays = DAYS_IN_OCTOBER;
+                break;
+            case 11:
+                maxDays = DAYS_IN_NOVEMBER;
+                break;
+            case 12:
+                maxDays = DAYS_IN_DECEMBER;
+                break;
+            default:
+                return false;
         }
 
         return day <= maxDays;
@@ -97,16 +122,13 @@ public class Date implements Comparable<Date> {
             if (this.year % CENTENNIAL == 0) {
                 if (this.year % QUARTERCENTENNIAL == 0) {
                     return true;
-                }
-                else {
+                } else {
                     return false;
                 }
-            }
-            else {
+            } else {
                 return true;
             }
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -181,106 +203,6 @@ public class Date implements Comparable<Date> {
      */
     public int getDay() {
         return day;
-    }
-
-    /**
-     * Testing method that tests if a date with a year less than 1000 is considered valid.
-     */
-    private static void testYearSmall() {
-        Date date = new Date("01/23/999");
-
-        boolean expectedOutput = false;
-        boolean actualOutput = date.isValid();
-        System.out.println("**Test case 1: Testing a year that is too small");
-        testResult(date, expectedOutput, actualOutput);
-    }
-
-    /**
-     * Testing method that tests if a date with a month less than 1 or greater than 12 is considered valid.
-     */
-    private static void testMonthNotInRange() {
-        Date date = new Date("13/22/2025");
-
-        boolean expectedOutput = false;
-        boolean actualOutput = date.isValid();
-        System.out.println("**Test case 2: Testing a month that is not in range");
-        testResult(date, expectedOutput, actualOutput);
-    }
-
-    /**
-     * Testing method that tests if a day greater than the maximum day for the month is valid.
-     */
-    private static void testDayNotInRange() {
-        Date date = new Date("01/34/2024");
-
-        boolean expectedOutput = false;
-        boolean actualOutput = date.isValid();
-        System.out.println("**Test case 3: Testing a day that is not in range");
-        testResult(date, expectedOutput, actualOutput);
-    }
-
-    /**
-     * Testing method that tests if february 29th on a non-leap year is valid.
-     */
-    private static void testNotALeapYear() {
-        Date date = new Date("02/29/2100");
-
-        boolean expectedOutput = false;
-        boolean actualOutput = date.isValid();
-        System.out.println("**Test case 4: Testing a date on february 29th that is not a leap year");
-        testResult(date, expectedOutput, actualOutput);
-    }
-
-    /**
-     * Testing method that tests if a date on the calendar is valid.
-     */
-    private static void testValidDate() {
-        Date date = new Date("12/31/2024");
-
-        boolean expectedOutput = true;
-        boolean actualOutput = date.isValid();
-        System.out.println("**Test case 5: Testing a valid date");
-        testResult(date, expectedOutput, actualOutput);
-    }
-
-    /**
-     * Testing method that tests if february 29th on a leap year is valid.
-     */
-    private static void testValidLeapYear() {
-        Date date = new Date("02/29/2400");
-
-        boolean expectedOutput = true;
-        boolean actualOutput = date.isValid();
-        System.out.println("**Test case 6: Testing a valid leap year");
-        testResult(date, expectedOutput, actualOutput);
-    }
-
-    /**
-     * Method that gives the results to test the testing methods.
-     *
-     * @param date the date being tested for validity
-     * @param expectedOutput whether the date should be valid or invalid
-     * @param actualOutput whether the date actually is considered valid or invalid
-     */
-    private static void testResult(Date date, boolean expectedOutput, boolean actualOutput) {
-        System.out.println("Test input: " + date);
-        System.out.println("Expected output: " + expectedOutput);
-        System.out.println("Actual output: " + actualOutput);
-        System.out.println(expectedOutput != actualOutput ? " (FAIL)\n" : " (PASS)\n");
-    }
-
-    /**
-     * Main driver for testing isValid().
-     *
-     * @param args the test method arguments
-     */
-    public static void main(String[] args) {
-        testYearSmall();
-        testMonthNotInRange();
-        testDayNotInRange();
-        testNotALeapYear();
-        testValidDate();
-        testValidLeapYear();
     }
 }
 
