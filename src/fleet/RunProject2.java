@@ -1,12 +1,12 @@
 package fleet;
 /**
- * Application entry point for Project 1.
+ * Application entry point for Project 2.
  *
  * @author Carly Chick
  */
 public class RunProject2 {
     /**
-     * Constructs a new RunProject1 object.
+     * Constructs a new RunProject2 object.
      */
     public RunProject2() {
 

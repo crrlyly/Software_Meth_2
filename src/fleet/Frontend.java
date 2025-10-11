@@ -112,7 +112,6 @@ public class Frontend {
         int month = date.getMonth() - 1;
         int day  = date.getDay();
         int year = date.getYear();
-
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day, 0, 0, 0);
         calendar.set(Calendar.MILLISECOND, 0);
@@ -257,7 +256,6 @@ public class Frontend {
      */
     private Date findEarliestEndDate(Booking booking){
         Date earliest = booking.getEnd();
-        int index = -1;
         for(int i = 0; i < reservation.Size(); i++){
             if(reservation.toArray()[i].getEnd().compareTo(earliest) <= 0){
                 earliest = reservation.toArray()[i].getEnd();
@@ -314,8 +312,6 @@ public class Frontend {
         return true;
     }
 
-    //__________________________________________________________________________________________________________
-
     /**
      * Method that loads the vehicles from vehicle.txt
      */
@@ -329,8 +325,6 @@ public class Frontend {
             System.out.println("File not found: vehicles.txt");
         }
     }
-
-    //__________________________________________________________________________________________________________
 
     /**
      * Checks for valid date for adding to fleet.
@@ -456,9 +450,13 @@ public class Frontend {
         System.out.println(vehicle.toString() + " has been added to the fleet.");
     }
 
-    //__________________________________________________________________________________________________________
-
-    //TODO ADD COMMENTS
+    /**
+     * Checks for if vehicle is already in fleet and if reservation already has existing bookings.
+     *
+     * @param vehicle
+     * @param booking
+     * @return true if checks all pass; false otherwise
+     */
     private boolean removeChecks(Vehicle vehicle, Booking booking){
         if(!fleet.contains(vehicle)){
             System.out.println(vehicle.getPlate() + " is not in the fleet.");
@@ -489,9 +487,6 @@ public class Frontend {
         System.out.println(getOriginalVehicle.getPlate() + " has been removed from the fleet.");
         fleet.remove(vehicle);
     }
-
-    //__________________________________________________________________________________________________________
-
 
     /**
      * Checks requested booking dates against rules:
@@ -533,6 +528,19 @@ public class Frontend {
         return true;
     }
 
+    /**
+     * Checks booking date against a 2nd set of rules
+     *
+     * @param parts
+     * @param vehicle
+     * @param startingDate
+     * @param endingDate
+     * @param today
+     * @param threeMonthsFromToday
+     * @param employee
+     * @param campus
+     * @return true if checks pass; false otherwise
+     */
     private boolean bookingChecks(String[] parts, Vehicle vehicle, Date startingDate, Date endingDate,
                                   Date today,  Date threeMonthsFromToday, Employee employee, Campus campus){
         if (!bookVehicleDateChecks(parts, startingDate, endingDate, today, threeMonthsFromToday)){
@@ -587,9 +595,6 @@ public class Frontend {
         reservation.add(booking);
     }
 
-    //__________________________________________________________________________________________________________
-
-
     /**
      * Cancels an existing reservation.
      *
@@ -611,9 +616,12 @@ public class Frontend {
         reservation.remove(booking);
     }
 
-    //__________________________________________________________________________________________________________
-
-
+    /**
+     * Finds the original booking in the reservation.
+     *
+     * @param findBooking
+     * @return the Booking if found; null otherwise
+     */
     private Booking findBooking(Booking findBooking){
         for(int i = 0; i < reservation.Size(); i++){
             if(reservation.toArray()[i].equalsNoBeginDate(findBooking)){
@@ -629,12 +637,10 @@ public class Frontend {
      *
      * @param parts tokenized input (must be length 4)
      */
-    //TODO: MUST MODIFY
     private void returnVehicle(String[] parts){
         if(!checkCommandParse(parts, 4,"R")){
             return;
         }
-        //System.out.println(parts[2]);
         Booking booking = new Booking(new Date(parts[1]), createVehicle(parts[2], null,null,null,null));
         if(!reservation.findInstanceOfVehicle(booking)){
             System.out.println(parts[2] + " booked with ending date " + parts[1] + " - cannot find the booking.");
@@ -657,16 +663,12 @@ public class Frontend {
         }
         Booking originalBooking = findBooking(booking);
         int originalMileage = originalBooking.getVehicle().getMileage();
-        //System.out.println("VEHICLE: " + originalBooking.getVehicle().toString());
         if(newMileage <= originalMileage){
             System.out.println("Invalid mileage - current mileage: " + originalMileage + " entered mileage: " + parts[3]);
             return;
         }
         moveFromReservationToTripList(originalBooking, originalMileage, newMileage);
     }
-
-    //__________________________________________________________________________________________________________
-
 
     /**
      * Prints all vehicles in the fleet ordered by location, make, then obtained date.
@@ -684,7 +686,6 @@ public class Frontend {
     /**
      * Prints reservations ordered by location, license plate, then beginning date.
      */
-    //TODO SOMETHING WRONG HERE
     private void displayBookings1(){
         if(reservation.Size() == 0){
             System.out.println("There is no booking record.");
@@ -712,7 +713,6 @@ public class Frontend {
     /**
      * Prints archived trips ordered by license plate and ending date.
      */
-    //TODO SOMETHING IS WRONG HERE
     private void displayCompletedTrips(){
         if(tripList.getLast() == null){
             System.out.println("There is no completed trips.");
@@ -724,7 +724,9 @@ public class Frontend {
         System.out.println();
     }
 
-    //TODO
+    /**
+     * Prints the cost report out for the TripList
+     */
     private void displayCostReport(){
         if(tripList.getLast() == null){
             System.out.println("There is no archived trips for the cost report.");

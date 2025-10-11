@@ -1,9 +1,7 @@
 package fleet;
-
 import Util.Date;
-
 /**
- * The class represents a vehicle with a license plate, obtained date, make, and mileage,
+ * The class represents a vehicle with a license plate, obtained date, make, mileage, and pickup campus.
  * Also has methods for comparison, equality checks, and string representation.
  *
  * @author Carly Chick
@@ -59,6 +57,12 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         return this.plate != null && this.plate.equals(other.plate);
     }
 
+    /**
+     * Finds the type of vehicle based off license plate.
+     *
+     * @param plate the license plate
+     * @return the corresponding type of vehicle string; null otherwise
+     */
     private String findType(String plate){
         switch(plate.charAt(plate.length() - 1)){
             case 'D':
@@ -87,17 +91,18 @@ public abstract class Vehicle implements Comparable<Vehicle> {
     }
 
     /**
-     * Compares "this" vehicle to another vehicle (passed in parameter) based on Make and then obtained date.
+     * Compares "this" vehicle to another vehicle (passed in parameter) based on location, Make, and then obtained date.
      *
      * @param other the Vehicle to compare to
-     * @return 0 if both the Make and obtained date are the same;
-     * -1 if this Vehicle's Make comes before the other Vehicle's Make alphabetically,
+     * @return 0 if the location, Make, and obtained date are the same;
+     * -1 if this Vehicle's location comes before the other Vehicle's location alphabetically,
+     * or if this Vehicle's Make comes before the other Vehicle's Make alphabetically,
      * or if the Makes are equal but this Vehicle's obtained date is earlier;
-     * 1 if this Vehicle's Make comes after the other Vehicle's Make alphabetically,
+     * 1 if this Vehicle's location comes after the other Vehicle's location alphabetically,
+     * or if this Vehicle's Make comes after the other Vehicle's Make alphabetically,
      * or if the Makes are equal but this Vehicle's obtained date is later;
      * Null pointer exception if the given Vehicle is null
      */
-    //TODO update the comment
     @Override
     public int compareTo(Vehicle other) {
         if (other == null) {
@@ -118,10 +123,21 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         return 0;
     }
 
-    //TODO
+    /**
+     * Abstract method to be implemented in the vehicle type classes to calculate the charge.
+     *
+     * @param mileageUsed used mileage
+     * @return the charge
+     */
     public abstract double charge(int mileageUsed);
 
-    //TODO
+    /**
+     * Abstract method to be implemented in the vehicle type classes to calculate the surcharge if there is any.
+     *
+     * @param mileageUsed used mileage
+     * @param surcharge boolean to tell if surcharge or not
+     * @return the surcharge
+     */
     public abstract double surcharge(int mileageUsed, boolean surcharge);
 
     /**
@@ -169,10 +185,19 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         this.mileage = mileage;
     }
 
+    /**
+     * Method to get the pickup campus
+     *
+     * @return the campus
+     */
     public Campus getCampus() {
         return campus;
     }
 
+    /**
+     * Sets to a new campus.
+     * @param campus the new campus
+     */
     public void setCampus(Campus campus) {
         this.campus = campus;
     }

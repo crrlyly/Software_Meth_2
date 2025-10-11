@@ -18,6 +18,11 @@ public enum Department {
     private Department() {
     }
 
+    /**
+     * Returns an array of Departments
+     *
+     * @return array of Departments
+     */
     public static Department[] toArray() {
         return new Department[]{
                 BusinessAnalyticsAndInformationTechnology,

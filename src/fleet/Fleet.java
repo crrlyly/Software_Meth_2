@@ -3,9 +3,6 @@ import java.util.Scanner;
 import Util.Date;
 import Util.List;
 import Util.Sort;
-
-import static Util.Sort.sortByLocationMakeAndDate;
-
 /**
  * This class creates a dynamic array of Vehicle objects that allows to add, remove,
  * find, and a print sorted by make (then obtained date).
@@ -20,7 +17,6 @@ public class Fleet extends List<Vehicle>{
     public Fleet() {
         super();
     }
-
 
     /**
      * Prints all vehicles in the fleet in order by location, make, then obtained date.
@@ -45,6 +41,11 @@ public class Fleet extends List<Vehicle>{
     }
 
 
+    /**
+     * Method to get the fleet
+     *
+     * @return the fleet array
+     */
     public Vehicle[] getFleet() {
         Vehicle[] arr = new Vehicle[Size()];
         for (int i = 0; i < Size(); i++) {
@@ -53,7 +54,12 @@ public class Fleet extends List<Vehicle>{
         return arr;
     }
 
-    //TODO
+    /**
+     * Loads the vehicles into the fleet from vehicles.txt.
+     *
+     * @param scanner the scanner object
+     * @return the amount of vehicles
+     */
     public int load(Scanner scanner){
         int count = 0;
         while (scanner.hasNextLine()) {

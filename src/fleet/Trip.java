@@ -34,14 +34,29 @@ public class Trip {
         return booking;
     }
 
+    /**
+     * Method to get the beginning mileage.
+     *
+     * @return beginning mileage
+     */
     public int getBeginMileage() {
         return beginMileage;
     }
 
+    /**
+     * Method to get the ending mileage.
+     *
+     * @return ending mileage
+     */
     public int getEndMileage() {
         return endMileage;
     }
 
+    /**
+     * Method to see if there is a surcharge
+     *
+     * @return if there is a surcharge
+     */
     public boolean isSurcharge() {
         return surcharge;
     }
@@ -70,7 +85,6 @@ public class Trip {
      *
      * @return String that shows all the Trip information
      */
-    //TODO
     @Override
     public String toString(){
         String plate = booking.getVehicle().getPlate();
@@ -85,6 +99,11 @@ public class Trip {
                 + surchargeAsterick + "] [picked up: " + this.booking.getVehicle().getCampus() + "]";
     }
 
+    /**
+     * Creates a String that shows the Trip information without the pickup campus.
+     *
+     * @return String that shows the Trip information without the pickup campus
+     */
     public String toStringNoPickup(){
         String plate = booking.getVehicle().getPlate();
         String beginDate = booking.getBegin().toString();

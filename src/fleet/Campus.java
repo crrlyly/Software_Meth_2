@@ -1,7 +1,6 @@
 package fleet;
 /**
- * This class creates a circularly linked list of trips.
- * Additionally, it inserts the trips in order of earliest end date, and can print the list/find the number of trips in the list.
+ * This enum class represents the campuses along with their city locations.
  *
  * @author Carly Chick
  */
@@ -14,14 +13,31 @@ public enum Campus {
 
     private final String city;
 
+    /**
+     * Constructor for a Campus in a city
+     *
+     * @param city the city
+     */
     Campus(String city) {
         this.city = city;
     }
 
+    /**
+     * Get the city of the campus
+     *
+     * @return the city
+     */
     public String getCity() {
         return city;
     }
 
+    /**
+     * Turns a string into the matching campus constant.
+     * The match is case-insensitive.
+     *
+     * @param campusStr the campus string
+     * @return the campus; null otherwise
+     */
     public static Campus parseCampus(String campusStr) {
         Campus[] allCampus = Campus.values();
         for (int i = 0; i < allCampus.length; i++) {
