@@ -19,7 +19,7 @@ public class Reservation extends List<Booking>{
     }
 
     /**
-     * Prints the reservation list in the order of the plates of the vehicle, then beginning date of the reservation.
+     * Prints the reservation list in the order of the location then plates of the vehicle, then beginning date of the reservation.
      */
     public void printByVehicle() {
         Sort.sortByLocationThenPlateThenDate(this);
