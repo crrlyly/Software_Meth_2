@@ -2,6 +2,10 @@ package fleet;
 import java.util.Scanner;
 import Util.Date;
 import Util.List;
+import Util.Sort;
+
+import static Util.Sort.sortByLocationMakeAndDate;
+
 /**
  * This class creates a dynamic array of Vehicle objects that allows to add, remove,
  * find, and a print sorted by make (then obtained date).
@@ -17,25 +21,13 @@ public class Fleet extends List<Vehicle>{
         super();
     }
 
+
     /**
      * Prints all vehicles in the fleet in order by location, make, then obtained date.
      * Sorting is done using selection sort.
      */
     public void printByMake() {
-        int n = Size();
-        for (int i = 0; i < n - 1; i++) {
-            int min = i;
-            for (int j = i + 1; j < n; j++) {
-                if (get(j).compareTo(get(min)) < 0) {
-                    min = j;
-                }
-            }
-            if (min != i) {
-                Vehicle tmp = get(i);
-                set(i, get(min));
-                set(min, tmp);
-            }
-        }
+        Sort.sortByLocationMakeAndDate(this);
         for (Vehicle v : this) {
             System.out.println(v);
         }

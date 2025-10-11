@@ -1,7 +1,25 @@
 package Util;
 import fleet.Booking;
+import fleet.Vehicle;
 
 public class Sort {
+
+    public static void sortByLocationMakeAndDate(List<Vehicle> list){
+        int n = list.Size();
+        for (int i = 0; i < n - 1; i++) {
+            int min = i;
+            for (int j = i + 1; j < n; j++) {
+                if (list.get(j).compareTo(list.get(min)) < 0) {
+                    min = j;
+                }
+            }
+            if (min != i) {
+                Vehicle tmp = list.get(i);
+                list.set(i, list.get(min));
+                list.set(min, tmp);
+            }
+        }
+    }
 
     public static void sortByLocationThenPlateThenDate(List<Booking> list) {
         for (int i = 1; i < list.Size(); i++) {
@@ -31,13 +49,9 @@ public class Sort {
         for (int i = 1; i < list.Size(); i++) {
             Booking key = list.get(i);
             int index = i - 1;
-
             while (index >= 0 && (
-                    // compare department alphabetically
                     list.get(index).getEmployee().getDept().name()
                             .compareTo(key.getEmployee().getDept().name()) > 0 ||
-
-                            // if departments are equal, compare employees alphabetically by name
                             (list.get(index).getEmployee().getDept().name()
                                     .equals(key.getEmployee().getDept().name()) &&
                                     list.get(index).getEmployee().name()
@@ -49,4 +63,6 @@ public class Sort {
             list.set(index + 1, key);
         }
     }
+
+
 }

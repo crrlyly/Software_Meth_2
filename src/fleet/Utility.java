@@ -19,7 +19,7 @@ public class Utility extends Vehicle{
     @Override
     public double surcharge(int mileageUsed, boolean surcharge){
         if(surcharge){
-            return (.3 * mileageUsed < 32.99 ? (.3 * mileageUsed) : 32.99);
+            return (.3 * mileageUsed < 35.99 ? (.3 * mileageUsed) : 35.99);
         }
         return -1;
     }

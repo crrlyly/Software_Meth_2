@@ -19,7 +19,7 @@ public class Sedan extends Vehicle{
     @Override
     public double surcharge(int mileageUsed, boolean surcharge){
         if(surcharge){
-            return (.25 * mileageUsed < 35.99 ? (.25 * mileageUsed) : 35.99);
+            return (.25 * mileageUsed < 32.99 ? (.25 * mileageUsed) : 32.99);
         }
         return -1;
     }

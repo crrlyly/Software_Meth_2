@@ -36,7 +36,6 @@ public class TripList extends List<Trip>{
         Node curr = last.next; // head
         Node prev = last;
         int compare = compareTrips(trip, curr.trip);
-        // If trip ends before or equal to head
         if (compare<0) {
             newNode.next = curr;
             last.next = newNode;
@@ -94,7 +93,6 @@ public class TripList extends List<Trip>{
 
     public void printCharges(){
         DecimalFormat df = new DecimalFormat("###,###,##0.00");
-        if (last == null) { System.out.println("No trips in the list."); return; }
         List<Trip> ba = new List<>(), cs = new List<>(), ee = new List<>(), iti = new List<>(), math = new List<>();
         groupTripsByDepartment(ba, cs, ee, iti, math);
         System.out.println("*List of charges ordered by department.");
@@ -106,7 +104,7 @@ public class TripList extends List<Trip>{
             double deptTotal = 0;
             for (int j = 0; j < depts[i].Size(); j++) {
                 Trip t = depts[i].get(j);
-                System.out.println("\t" + t.toStringNoPickup()); // Trip.toString() prints all details
+                System.out.println("\t" + t.toStringNoPickup());
                 int used = t.getEndMileage() - t.getBeginMileage();
                 double charge = t.getBooking().getVehicle().charge(used);
                 double surcharge = 0;
@@ -114,25 +112,23 @@ public class TripList extends List<Trip>{
                 String surcharge1;
                 if(t.isSurcharge())
                     surcharge = t.getBooking().getVehicle().surcharge(used,t.isSurcharge());
-                surcharge1 = "$"+df.format(surcharge);
+                surcharge1 = "$" + df.format(surcharge);
                 if (surcharge ==0)
                     surcharge1 = "no";
                 deptTotal += charge + surcharge;
-                System.out.println("\t\t" + "[charge: $"+charge1+"] [surcharge: "+surcharge1 + "] [total charge: $ " + df.format((charge+surcharge))+"]");
+                System.out.println("\t\t" + "[charge: $"+charge1+"] [surcharge: "+surcharge1 + "] [total charge: $ " + df.format(charge+surcharge) +"]");
             }
-            System.out.println("  <*>Department total: $ " + df.format(deptTotal));
+            System.out.println("\t<*>Department total: $ " + df.format(deptTotal));
         }
         System.out.println("*end of list.");
     }
-    private void groupTripsByDepartment(
-            List<Trip> ba, List<Trip> cs, List<Trip> ee,
-            List<Trip> iti, List<Trip> math) {
 
+    private void groupTripsByDepartment(List<Trip> ba, List<Trip> cs, List<Trip> ee,
+                                        List<Trip> iti, List<Trip> math) {
         Node curr = last.next;
         do {
             Trip t = curr.trip;
             Department d = t.getBooking().getEmployee().getDept();
-
             if (d == Department.BusinessAnalyticsAndInformationTechnology)
                 ba.add(t);
             else if (d == Department.ComputerScience)
@@ -143,9 +139,7 @@ public class TripList extends List<Trip>{
                 iti.add(t);
             else if (d == Department.Math)
                 math.add(t);
-
             curr = curr.next;
         } while (curr != last.next);
     }
-
 }
