@@ -1,7 +1,12 @@
 package fleet;
 
 import Util.Date;
-
+/**
+ * This class creates a circularly linked list of trips.
+ * Additionally, it inserts the trips in order of earliest end date, and can print the list/find the number of trips in the list.
+ *
+ * @author Carly Chick
+ */
 public class Truck extends Vehicle{
     public Truck(String plate) {
         super(plate);

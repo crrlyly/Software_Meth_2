@@ -1,7 +1,12 @@
 package Util;
 import fleet.Booking;
 import fleet.Vehicle;
-
+/**
+ * This class creates a circularly linked list of trips.
+ * Additionally, it inserts the trips in order of earliest end date, and can print the list/find the number of trips in the list.
+ *
+ * @author Alec Cotler
+ */
 public class Sort {
 
     public static void sortByLocationMakeAndDate(List<Vehicle> list){

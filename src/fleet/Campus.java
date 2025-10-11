@@ -1,5 +1,10 @@
 package fleet;
-
+/**
+ * This class creates a circularly linked list of trips.
+ * Additionally, it inserts the trips in order of earliest end date, and can print the list/find the number of trips in the list.
+ *
+ * @author Carly Chick
+ */
 public enum Campus {
     Busch("New Brunswick"),
     Livingston("New Brunswick"),

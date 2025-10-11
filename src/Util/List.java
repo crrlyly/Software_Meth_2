@@ -1,7 +1,11 @@
 package Util;
-
 import java.util.Iterator;
-
+/**
+ * This class creates a circularly linked list of trips.
+ * Additionally, it inserts the trips in order of earliest end date, and can print the list/find the number of trips in the list.
+ *
+ * @author Alec Cotler
+ */
 public class List<E> implements Iterable<E> {
     public static final int CAPACITY = 4;
     public static final int NOT_FOUND = -1;
