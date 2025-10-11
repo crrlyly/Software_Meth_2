@@ -1,4 +1,4 @@
-package JUnitTest;
+package JUnitTests;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
@@ -7,8 +7,6 @@ import fleet.*;
 
 
 public class VehicleCompareToTest {
-
-    // ========= NEGATIVE TESTS (-1) =========
 
     // Campus comparison determines outcome
     @Test
@@ -34,7 +32,6 @@ public class VehicleCompareToTest {
         assertTrue(v1.compareTo(v2) < 0, "Expected earlier date < later date");
     }
 
-    // ========= ZERO TESTS (0) =========
 
     @Test
     void testCompareToEqualSedan() {
@@ -57,7 +54,7 @@ public class VehicleCompareToTest {
         assertEquals(0, v1.compareTo(v2), "Expected identical Trucks to compare equal");
     }
 
-    // ========= POSITIVE TESTS (+1) =========
+
 
     // Campus comparison determines outcome
     @Test
