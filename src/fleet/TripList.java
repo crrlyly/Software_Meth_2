@@ -1,5 +1,5 @@
 package fleet;
-import Util.List;
+import util.List;
 import java.text.DecimalFormat;
 /**
  * This class creates a circularly linked list of trips.
@@ -16,6 +16,35 @@ public class TripList extends List<Trip>{
      */
     public TripList() {
 
+    }
+
+    /**
+     * groups trips into their respective department lists
+     *
+     * @param ba Business Analytics and Information Technology list to be added to.
+     * @param cs Computer Science list to be added to.
+     * @param ee Electrical Engineering list to be added to.
+     * @param iti Information Technology and Informatics list to be added to.
+     * @param math Math list to be added to.
+     */
+    private void groupTripsByDepartment(List<Trip> ba, List<Trip> cs, List<Trip> ee,
+                                        List<Trip> iti, List<Trip> math) {
+        Node curr = last.next;
+        do {
+            Trip t = curr.trip;
+            Department d = t.getBooking().getEmployee().getDept();
+            if (d == Department.BusinessAnalyticsAndInformationTechnology)
+                ba.add(t);
+            else if (d == Department.ComputerScience)
+                cs.add(t);
+            else if (d == Department.ElectricalEngineering)
+                ee.add(t);
+            else if (d == Department.InformationTechnologyAndInformatics)
+                iti.add(t);
+            else if (d == Department.Math)
+                math.add(t);
+            curr = curr.next;
+        } while (curr != last.next);
     }
 
     /**
@@ -59,12 +88,21 @@ public class TripList extends List<Trip>{
         prev.next = newNode;
     }
 
+    /**
+     * Compares Trips by plate and ending date
+     *
+     * @param t1 first trip
+     * @param t2 second trip
+     * @return a negative integer, zero, or a positive integer as the first trip
+     * is less than, equal to, or greater than the second trip
+     */
     private int compareTrips(Trip t1, Trip t2) {
         int cmp = t1.getBooking().getVehicle().getPlate().compareTo(t2.getBooking().getVehicle().getPlate());
         if (cmp == 0)
             cmp = t1.getBooking().getEnd().compareTo(t2.getBooking().getEnd());
         return cmp;
     }
+
     /**
      * Prints all the trips in the trip linked list.
      */
@@ -126,32 +164,6 @@ public class TripList extends List<Trip>{
         System.out.println("*end of list.");
     }
 
-    /**
-     * groups trips into their respective department lists
-     *
-     * @param ba Business Analytics and Information Technology list to be added to.
-     * @param cs Computer Science list to be added to.
-     * @param ee Electrical Engineering list to be added to.
-     * @param iti Information Technology and Informatics list to be added to.
-     * @param math Math list to be added to.
-     */
-    private void groupTripsByDepartment(List<Trip> ba, List<Trip> cs, List<Trip> ee,
-                                        List<Trip> iti, List<Trip> math) {
-        Node curr = last.next;
-        do {
-            Trip t = curr.trip;
-            Department d = t.getBooking().getEmployee().getDept();
-            if (d == Department.BusinessAnalyticsAndInformationTechnology)
-                ba.add(t);
-            else if (d == Department.ComputerScience)
-                cs.add(t);
-            else if (d == Department.ElectricalEngineering)
-                ee.add(t);
-            else if (d == Department.InformationTechnologyAndInformatics)
-                iti.add(t);
-            else if (d == Department.Math)
-                math.add(t);
-            curr = curr.next;
-        } while (curr != last.next);
-    }
+
+
 }

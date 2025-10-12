@@ -1,5 +1,5 @@
 package fleet;
-import Util.Date;
+import util.Date;
 /**
  * This class implements a specific type of vehicle (Truck) to calculate the charge and surcharge.
  *

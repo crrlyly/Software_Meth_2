@@ -1,6 +1,6 @@
 package fleet;
 
-import Util.Date;
+import util.Date;
 
 /**
  * This class implements bookings for the fleet including an equals and toString method.

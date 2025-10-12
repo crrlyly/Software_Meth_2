@@ -1,4 +1,4 @@
-package Util;
+package util;
 import java.util.Iterator;
 /**
  * This class creates a circularly linked list of trips.

@@ -1,6 +1,6 @@
 package fleet;
-import Util.List;
-import Util.Sort;
+import util.List;
+import util.Sort;
 /**
  * This class creates an array of bookings, where if the array is full adds 4 more spaces to the array
  * Then, additional lines of description are added to elaborate on the

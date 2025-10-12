@@ -1,5 +1,5 @@
 package fleet;
-import Util.Date;
+import util.Date;
 /**
  * The class represents a vehicle with a license plate, obtained date, make, mileage, and pickup campus.
  * Also has methods for comparison, equality checks, and string representation.
@@ -40,24 +40,6 @@ public abstract class Vehicle implements Comparable<Vehicle> {
     }
 
     /**
-     * Checks if two vehicles are equal by their license plates.
-     *
-     * @param obj the reference object with which to compare.
-     * @return true if the plates are not null and their license plates are the same; false otherwise
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj){
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()){
-            return false;
-        }
-        Vehicle other = (Vehicle) obj;
-        return this.plate != null && this.plate.equals(other.plate);
-    }
-
-    /**
      * Finds the type of vehicle based off license plate.
      *
      * @param plate the license plate
@@ -75,6 +57,24 @@ public abstract class Vehicle implements Comparable<Vehicle> {
                 System.out.println("Unknown vehicle type: " + plate);
                 return null;
         }
+    }
+
+    /**
+     * Checks if two vehicles are equal by their license plates.
+     *
+     * @param obj the reference object with which to compare.
+     * @return true if the plates are not null and their license plates are the same; false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj){
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()){
+            return false;
+        }
+        Vehicle other = (Vehicle) obj;
+        return this.plate != null && this.plate.equals(other.plate);
     }
 
     /**

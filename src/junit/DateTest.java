@@ -1,8 +1,8 @@
-package JUnitTests;
+package junit;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-import Util.Date;
+import util.Date;
 
 /**
  * This class tests the isValid method in the date class.

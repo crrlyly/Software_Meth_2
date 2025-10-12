@@ -1,4 +1,4 @@
-package Util;
+package util;
 import java.util.StringTokenizer;
 /**
  * A Date class that represents a calendar date in mm/dd/yyyy format.
