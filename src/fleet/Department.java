@@ -15,7 +15,7 @@ public enum Department {
     /**
      * Constructor for Department
      */
-    private Department() {
+    Department() {
     }
 
     /**

@@ -736,9 +736,6 @@ public class Frontend {
         System.out.println();
     }
 
-    //__________________________________________________________________________________________________________
-
-
     /**
      * Runs the command loop for the Vehicle Management System.
      */

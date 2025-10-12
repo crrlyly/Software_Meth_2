@@ -28,6 +28,7 @@ public class Reservation extends List<Booking>{
         }
 
     }
+
     /**
      * Prints the reservation list ordered by department then by employee (alphabetically).
      */

@@ -65,21 +65,6 @@ public class Booking {
     }
 
     /**
-     * Constructor of a booking with a beginning date, end date, vehicle, employee, and dropoff.
-     *
-     * @param begin
-     * @param end
-     * @param employee
-     * @param vehicle
-     */
-    public Booking(Date begin, Date end, Employee employee, Vehicle vehicle) {
-        this.begin = begin;
-        this.end = end;
-        this.employee = employee;
-        this.vehicle = vehicle;
-    }
-
-    /**
      * Returns the beginning date of the booking.
      *
      * @return begin the beginning date of the booking

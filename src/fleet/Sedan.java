@@ -6,6 +6,7 @@ import Util.Date;
  * @author Carly Chick
  */
 public class Sedan extends Vehicle{
+
     /**
      * Constructor to create a new Sedan Vehicle with only the plate.
      *
