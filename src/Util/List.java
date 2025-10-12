@@ -174,6 +174,10 @@ public class List<E> implements Iterable<E> {
         return NOT_FOUND;
     }
 
+    /**
+     * creates an object to iterate through the list
+     * @param <E>, an iterator over any type of object.
+     */
     private class ListIterator<E> implements Iterator<E> {
 
         int current = 0; //current index when traversing the list (array)
