@@ -91,6 +91,9 @@ public class TripList extends List<Trip>{
         return last;
     }
 
+    /**
+     * Prints the cost report, ordered by department.
+     */
     public void printCharges(){
         DecimalFormat df = new DecimalFormat("###,###,##0.00");
         List<Trip> ba = new List<>(), cs = new List<>(), ee = new List<>(), iti = new List<>(), math = new List<>();
@@ -123,6 +126,15 @@ public class TripList extends List<Trip>{
         System.out.println("*end of list.");
     }
 
+    /**
+     * groups trips into their respective department lists
+     *
+     * @param ba Business Analytics and Information Technology list to be added to.
+     * @param cs Computer Science list to be added to.
+     * @param ee Electrical Engineering list to be added to.
+     * @param iti Information Technology and Informatics list to be added to.
+     * @param math Math list to be added to.
+     */
     private void groupTripsByDepartment(List<Trip> ba, List<Trip> cs, List<Trip> ee,
                                         List<Trip> iti, List<Trip> math) {
         Node curr = last.next;

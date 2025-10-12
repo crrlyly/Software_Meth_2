@@ -6,6 +6,12 @@ import Util.Date;
 import fleet.*;
 
 
+/**
+ * This class tests the compareTo method of the vehicle super class with all of the vehicle subclasses.
+ *
+ * @author Alec Cotler
+ */
+
 public class VehicleCompareToTest {
 
     // Campus comparison determines outcome

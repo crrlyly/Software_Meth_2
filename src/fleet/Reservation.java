@@ -97,6 +97,11 @@ public class Reservation extends List<Booking>{
         return false;
     }
 
+    /**
+     * returns an array from our implementation of a list.
+     *
+     * @return out ,the booking array created.
+     */
     public Booking[] toArray() {
         Booking[] out = new Booking[Size()];
         for (int i = 0; i < Size(); i++) out[i] = get(i);

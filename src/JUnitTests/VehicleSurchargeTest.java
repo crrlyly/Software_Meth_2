@@ -5,6 +5,12 @@ import org.junit.jupiter.api.Test;
 import Util.Date;
 import fleet.*;
 
+/**
+ * This class tests the Surcharge methods of all of the vehicle subclasses.
+ *
+ * @author Alec Cotler
+ */
+
 public class VehicleSurchargeTest {
     @Test
     void testNoSurchargeSedan() {

@@ -9,6 +9,11 @@ import fleet.Vehicle;
  */
 public class Sort {
 
+    /**
+     * Sort a list of vehicles by their location, make, and then date.
+     *
+     * @param list , list of vehicles to be sorted
+     */
     public static void sortByLocationMakeAndDate(List<Vehicle> list){
         int n = list.Size();
         for (int i = 0; i < n - 1; i++) {
@@ -26,6 +31,10 @@ public class Sort {
         }
     }
 
+    /**
+     * Sort a list of bookings by their location, plate, and then end date.
+     * @param list, the list of bookings to be sorted.
+     */
     public static void sortByLocationThenPlateThenDate(List<Booking> list) {
         for (int i = 1; i < list.Size(); i++) {
             Booking key = list.get(i);
@@ -50,6 +59,10 @@ public class Sort {
         }
     }
 
+    /**
+     * Sort a list of bookings by their department and then the employee.
+     * @param list , List of bookings to be sorted.
+     */
     public static void sortByDeptThenEmployee(List<Booking> list) {
         for (int i = 1; i < list.Size(); i++) {
             Booking key = list.get(i);
