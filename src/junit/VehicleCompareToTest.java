@@ -14,6 +14,13 @@ import fleet.*;
 
 public class VehicleCompareToTest {
 
+
+    /**
+     * Just empty constructor.
+     */
+    public VehicleCompareToTest() {
+    }
+
     /**
      * Tests when the campus of vehicle 1 comes before the campus of vehicle 2.
      */

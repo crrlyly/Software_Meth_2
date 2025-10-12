@@ -6,12 +6,19 @@ import util.Date;
 import fleet.*;
 
 /**
- * This class tests the Surcharge methods of all of the vehicle subclasses.
+ * This class tests the Surcharge methods of all the vehicle subclasses.
  *
  * @author Alec Cotler
  */
 
 public class VehicleSurchargeTest {
+
+    /**
+     * Just an empty constructor.
+     */
+    public VehicleSurchargeTest() {
+    }
+
     /**
      * Tests a sedan with no surcharge
      */

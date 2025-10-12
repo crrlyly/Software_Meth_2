@@ -10,6 +10,12 @@ import fleet.Vehicle;
 public class Sort {
 
     /**
+     * Just an empty constructor.
+     */
+    public Sort() {
+    }
+
+    /**
      * Sort a list of vehicles by their location, make, and then date.
      *
      * @param list , list of vehicles to be sorted

@@ -453,8 +453,8 @@ public class Frontend {
     /**
      * Checks for if vehicle is already in fleet and if reservation already has existing bookings.
      *
-     * @param vehicle
-     * @param booking
+     * @param vehicle the vehicle
+     * @param booking the booking
      * @return true if checks all pass; false otherwise
      */
     private boolean removeChecks(Vehicle vehicle, Booking booking){
@@ -531,14 +531,14 @@ public class Frontend {
     /**
      * Checks booking date against a 2nd set of rules
      *
-     * @param parts
-     * @param vehicle
-     * @param startingDate
-     * @param endingDate
-     * @param today
-     * @param threeMonthsFromToday
-     * @param employee
-     * @param campus
+     * @param parts tokenized input
+     * @param vehicle vehicle
+     * @param startingDate the starting date
+     * @param endingDate the ending date
+     * @param today today
+     * @param threeMonthsFromToday day three months from today
+     * @param employee employee
+     * @param campus campus
      * @return true if checks pass; false otherwise
      */
     private boolean bookingChecks(String[] parts, Vehicle vehicle, Date startingDate, Date endingDate,
@@ -619,7 +619,7 @@ public class Frontend {
     /**
      * Finds the original booking in the reservation.
      *
-     * @param findBooking
+     * @param findBooking booking to find
      * @return the Booking if found; null otherwise
      */
     private Booking findBooking(Booking findBooking){

@@ -13,6 +13,12 @@ import util.Date;
 class DateTest {
 
     /**
+     * Just empty constructor.
+     */
+    public DateTest() {
+    }
+
+    /**
      * Test for when the year is too small
      */
     @Test
